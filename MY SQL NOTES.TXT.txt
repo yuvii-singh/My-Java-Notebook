@@ -1,0 +1,3337 @@
+                                                          MY SQL NOTES.TXT 
+                                                            
+
+
+
+                                                     CONSTRAINT  IN MYSQL
+
+
+A constraint is a rule applied on a column to control what type of data can be stored.
+
+🔹 What is a Constraint?
+
+A constraint is used to:
+
+Ensure data accuracy
+
+Maintain data integrity
+
+Prevent invalid data entry
+
+🔹 Types of Constraints in MySQL
+1️⃣ NOT NULL
+
+Column cannot store NULL (empty value)
+
+name VARCHAR(50) NOT NULL;
+2️⃣ UNIQUE
+
+All values must be different
+
+email VARCHAR(100) UNIQUE;
+
+✔ No duplicate emails allowed
+
+3️⃣ PRIMARY KEY
+
+Uniquely identifies each row
+✔ Cannot be NULL
+✔ Cannot be duplicate
+
+id INT PRIMARY KEY;
+4️⃣ FOREIGN KEY
+
+Creates relationship between two tables
+
+FOREIGN KEY (dept_id) REFERENCES departments(id);
+
+✔ Ensures matching value exists in another table
+
+5️⃣ CHECK
+
+Ensures condition is true
+
+age INT CHECK (age >= 18);
+6️⃣ DEFAULT
+
+Gives default value if not provided
+
+status VARCHAR(20) DEFAULT 'active';
+7️⃣ AUTO_INCREMENT
+
+Automatically increases number
+
+id INT AUTO_INCREMENT;
+🔹 Example Table with Constraints
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    age INT CHECK (age >= 18),
+    status VARCHAR(20) DEFAULT 'active'
+);
+🔁 Most Important for Exams & Interviews
+
+Focus on:
+
+PRIMARY KEY
+
+FOREIGN KEY
+
+NOT NULL
+
+UNIQUE
+
+📝 One-line Exam Answer
+
+Constraints are rules applied to columns to maintain data integrity in a table.     
+
+
+
+
+
+                                                                                             UNIQUE KEY in MySQL
+
+
+
+
+PAHLI BAAT AAP EK TABLE ME EK HI PRIMARY KEY USED KR SAKTE HO EK SE JAYADA NHI AND AAPKO KOI CHIZ UNIQE ADD KARANA H KISI TABLE AND US TABLE ME PAHLE SE EK PRIMARY KEY H SO PRIMARY KEY USED NHI KR SAKTE SO WAHA UNIQUE CONSTARINT USED HOGA LIKE THIS EMAIL PRIMARY KEY H AND U WANT TO ADD PHONE NO IS UNIQUE SO THEN USED UNIQUES KEY S 
+
+
+
+
+
+UNIQUE KEY ensures that all values in a column (or combination of columns) are different — no duplicates allowed.
+
+It is a constraint used to maintain data integrity in a table.
+
+1️⃣ What is UNIQUE KEY?
+
+A UNIQUE KEY prevents duplicate values in a column.
+
+✔ Duplicate values ❌ Not allowed
+✔ NULL values ✅ Allowed (but only one NULL in most MySQL versions for single-column unique)
+
+2️⃣ Example Without UNIQUE
+CREATE TABLE students (
+    id INT,
+    email VARCHAR(100)
+);
+
+If you insert:
+
+INSERT INTO students VALUES (1, 'abc@gmail.com');
+INSERT INTO students VALUES (2, 'abc@gmail.com');
+
+⚠ Duplicate email allowed (not good).
+
+3️⃣ Example With UNIQUE KEY
+CREATE TABLE students (
+    id INT,
+    email VARCHAR(100) UNIQUE
+);
+
+Now:
+
+INSERT INTO students VALUES (1, 'abc@gmail.com');
+INSERT INTO students VALUES (2, 'abc@gmail.com');
+
+❌ ERROR: Duplicate entry
+
+4️⃣ Add UNIQUE to Existing Table
+ALTER TABLE students
+ADD UNIQUE (email);
+
+5️⃣ UNIQUE with Multiple Columns (Composite Unique)
+CREATE TABLE orders (
+    order_id INT,
+    product_id INT,
+    UNIQUE (order_id, product_id)
+);
+
+👉 This means:
+
+Same order_id + product_id combination ❌ Not allowed
+
+But order_id can repeat separately ✔
+
+product_id can repeat separately ✔
+
+6️⃣ Difference Between PRIMARY KEY and UNIQUE KEY
+PRIMARY KEY	UNIQUE KEY
+Only one per table	Multiple allowed
+Cannot contain NULL	Can contain NULL
+Automatically NOT NULL	NULL allowed
+7️⃣ Real-Life Example
+
+In your internship projects (like student database or employee system):
+
+Email → UNIQUE KEY
+
+Phone number → UNIQUE KEY
+
+ID → PRIMARY KEY   
+                                example : 
+
+ CREATE TABLE CONTACTS
+    -> ( ID INT ,
+    -> EMAIL VARCHAR(50) UNIQUE
+    -> );
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> insert into  contacts values(44,'anup@123');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into  contacts values(44,'anup@123');
+ERROR 1062 (23000): Duplicate entry 'anup@123' for key 'contacts.EMAIL'   kyuki aapne unique constraint ka used kiya h so aap dekh sakte ho   
+
+
+
+NOTE : PRIMARY KEY KEWAL EK BAR USED KR SAKTE HO TABLE ME EK TABLE ME EK BAR HI BUT UNIQUES KEY BAHUT BAR ADD KR SAKTE HO AND HAR EK COLUMN KO UMIQUE BANA SAKTE HO SO AGAR AAPKO DUPLICATE VALUES NHI CHAHIYE AND AAPNE PRIMARY KEY USED KR RHA H TO USKE JAGAH PR UNIQUES KEY KA USED KARO .
+
+
+                                                                           CHECK CONSTAINT 
+
+✅ CHECK Constraint in MySQL
+
+CHECK constraint is used to restrict values in a column based on a condition.
+
+It ensures that inserted or updated data satisfies a rule.
+
+🔹 Basic Syntax
+1️⃣ While Creating Table
+CREATE TABLE users (
+    id INT,
+    age INT CHECK (age >= 18)
+);
+
+👉 Now age must be 18 or more
+If you insert:
+
+INSERT INTO users VALUES (1, 16);
+
+❌ ERROR (Check constraint violated)
+
+2️⃣ Add CHECK to Existing Table
+ALTER TABLE users
+ADD CHECK (age >= 18);
+🔹 Example 1 – Mobile Number Length
+CREATE TABLE contacts (
+    id INT,
+    mobile VARCHAR(15),
+    CHECK (LENGTH(mobile) >= 10)
+);
+
+Now mobile must have at least 10 digits.
+
+🔹 Example 2 – Salary Condition
+CREATE TABLE employees (
+    id INT,
+    salary DECIMAL(10,2),
+    CHECK (salary > 0)
+);
+
+Salary cannot be negative.
+
+🔹 Column-Level vs Table-Level CHECK
+✔ Column-Level
+age INT CHECK (age >= 18)
+✔ Table-Level
+CHECK (age >= 18)
+
+Both work similarly.
+
+🔥 Important Points (Very Important)
+
+CHECK works properly in MySQL 8.0.16+
+
+MySQL checks existing data before adding CHECK
+
+If old data violates condition → ❌ ERROR
+
+CHECK cannot reference another table
+
+NULL values usually pass CHECK (because NULL is unknown)
+
+Example:
+
+mobile VARCHAR(15) CHECK (LENGTH(mobile) >= 10)
+
+If mobile = NULL → ✅ Allowed
+
+🔥 Difference: CHECK vs UNIQUE
+CHECK	UNIQUE
+Restricts value condition	Prevents duplicate values
+Example: age >= 18	Example: email must be unique
+🎯 Real Interview Question
+
+Q: Can CHECK and UNIQUE be used together?
+Answer: Yes.
+
+Example:
+
+mobile VARCHAR(15) UNIQUE CHECK (LENGTH(mobile) >= 10) 
+
+
+SELECT * FROM CONTACTS;
++------+----------+-----------+
+| ID   | EMAIL    | MOBILE    |
++------+----------+-----------+
+|   44 | anup@123 | NULL      |
+| NULL | NULL     | 234243214 |
++------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE CONTACTS
+    -> MODIFY MOBILE VARCHAR(15) UNIQUE CHECK (LENGTH (MOBILE) >=10);
+ERROR 3819 (HY000): Check constraint 'contacts_chk_1' is violated.           YE VIOLATED ERROR MEANS AAPNE JO CHECK ME CONDITION DIYA H WAH YE FOLLOW NHI KR RHA H SO USKE LIYE NICHE UPDATE 
+
+KEY KA USED KR KE THIK KAR SAKTE H
+
+
+mysql> ALTER TABLE CONTACTS
+    -> MODIFY MOBILE VARCHAR(15) UNIQUE CHECK(LENGTH(MOBILE)>=10);
+ERROR 3819 (HY000): Check constraint 'contacts_chk_1' is violated.   SAME HI PROBLEM H VIOLATED NICHE SOLUTION H ISKA 
+mysql> UPDATE CONTACTS
+    -> SET MOBILE = '2342432145'
+    -> WHERE MOBILE = '234243214';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> ALTER TABLE CONTACTS
+    -> MODIFY MOBILE VARCHAR(15) UNIQUE CHECK (LENGTH(MOBILE) >= 10);
+Query OK, 2 rows affected, 1 warning (0.13 sec)
+Records: 2  Duplicates: 0  Warnings: 1
+
+mysql> SELECT * FROM CONTACTS;
++------+----------+------------+
+| ID   | EMAIL    | MOBILE     |
++------+----------+------------+
+|   44 | anup@123 | NULL       |
+| NULL | NULL     | 2342432145 |
++------+----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO VALUES (1,'YUVII@GMAIL.COM',+91-7762845090);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUES (1,'YUVII@GMAIL.COM',+91-7762845090)' at line 1
+mysql> INSERT INTO VALUES (1,'YUVII@GMAIL.COM',7762845090);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUES (1,'YUVII@GMAIL.COM',7762845090)' at line 1
+mysql> INSERT INTO VALUES (1,'YUVII@GMAIL.COM','+91-7762845090');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUES (1,'YUVII@GMAIL.COM','+91-7762845090')' at line 1
+mysql> INSERT INTO CONTACTS VALUES (1,'YUVII@GMAIL.COM',+91-7762845090);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM CONTACTS;
++------+-----------------+-------------+
+| ID   | EMAIL           | MOBILE      |
++------+-----------------+-------------+
+|   44 | anup@123        | NULL        |
+| NULL | NULL            | 2342432145  |
+|    1 | YUVII@GMAIL.COM | -7762844999 |
++------+-----------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO CONTACTS VALUES (1,'YUVII@GMAIL.COM',+91-7762845090454354);
+ERROR 1406 (22001): Data too long for column 'MOBILE' at row 1
+mysql> INSERT INTO CONTACTS VALUES (1,'YUVII@GMAIL.COM',77628450904534);
+ERROR 1062 (23000): Duplicate entry 'YUVII@GMAIL.COM' for key 'contacts.EMAIL'
+mysql> INSERT INTO CONTACTS VALUES (1,'YUVII232@GMAIL.COM',77628450904534);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CONTACTS;
++------+--------------------+----------------+
+| ID   | EMAIL              | MOBILE         |
++------+--------------------+----------------+
+|   44 | anup@123           | NULL           |
+| NULL | NULL               | 2342432145     |
+|    1 | YUVII@GMAIL.COM    | -7762844999    |
+|    1 | YUVII232@GMAIL.COM | 77628450904534 |
++------+--------------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO CONTACTS VALUES (1,'YUVII@GMAIL.COM',+91 -7762845090);
+ERROR 1062 (23000): Duplicate entry 'YUVII@GMAIL.COM' for key 'contacts.EMAIL'
+mysql>
+mysql> INSERT INTO CONTACTS VALUES (1,'YUVI2DDSAI@GMAIL.COM','+91 -7762845090');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM CONTACTS;
++------+----------------------+-----------------+
+| ID   | EMAIL                | MOBILE          |
++------+----------------------+-----------------+
+|   44 | anup@123             | NULL            |
+| NULL | NULL                 | 2342432145      |
+|    1 | YUVII@GMAIL.COM      | -7762844999     |
+|    1 | YUVII232@GMAIL.COM   | 77628450904534  |
+|    1 | YUVI2DDSAI@GMAIL.COM | +91 -7762845090 |
++------+----------------------+-----------------+
+5 rows in set (0.00 sec)
+
+
+
+CREATE TABLE CON1
+    -> ( MOB VARCHAR(15) UNIQUE CHECK (LENGTH(MOB) >=10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> CREATE TABLE CON1
+    -> ( MOB VARCHAR(15) UNIQUE CHECK (LENGTH(MOB) >=10));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO CON1 VALUES (8809395651);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO CON1 VALUES (8809395651);
+ERROR 1062 (23000): Duplicate entry '8809395651' for key 'con1.MOB'   UNIQUES KO SHOW KR RHA H 
+mysql> INSERT INTO CON1 VALUES (8809391);
+ERROR 3819 (HY000): Check constraint 'con1_chk_1' is violated.   ISKA MTLB AAPNE CHECK CONDITON ME 10 SE KAM VALUES DIYA H ISLIYE ERROR SHOW KR RHA H YAHA PR 
+mysql> INSERT INTO CON1 VALUES (8809391343434);  
+
+
+ mysql> CREATE TABLE CON1
+    -> ( MOB VARCHAR(15) UNIQUE CHECK (LENGTH(MOB) >=10));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO CON1 VALUES (8809395651);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO CON1 VALUES (8809395651);
+ERROR 1062 (23000): Duplicate entry '8809395651' for key 'con1.MOB'
+mysql> INSERT INTO CON1 VALUES (8809391);
+ERROR 3819 (HY000): Check constraint 'con1_chk_1' is violated.
+mysql> INSERT INTO CON1 VALUES (8809391343434);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CONQ;
+ERROR 1146 (42S02): Table 'bank_db.conq' doesn't exist
+mysql> SELECT * FROM CON1;
++---------------+
+| MOB           |
++---------------+
+| 8809391343434 |
+| 8809395651    |
++---------------+
+
+
+
+
+
+                                                            	NAMING CONSTRAINT IN MY SQL 
+
+Naming a Constraint in MySQL
+
+You can give a custom name to a constraint so you can easily identify, modify, or drop it later.
+
+By default, MySQL gives automatic names like:
+
+contacts_chk_1
+
+But you can define your own name.
+
+🔹 1️⃣ Naming a CHECK Constraint
+✅ While Creating Table
+CREATE TABLE users (
+    id INT,
+    age INT,
+    CONSTRAINT chk_age CHECK (age >= 18)
+);
+
+Here:
+
+chk_age → constraint name
+
+✅ Add CHECK to Existing Table
+ALTER TABLE users
+ADD CONSTRAINT chk_salary CHECK (salary > 0);
+🔹 2️⃣ Naming a UNIQUE Constraint
+CREATE TABLE contacts (
+    id INT,
+    email VARCHAR(100),
+    CONSTRAINT uq_email UNIQUE (email)
+);
+
+uq_email → custom unique constraint name
+
+🔹 3️⃣ Naming a PRIMARY KEY
+CREATE TABLE students (
+    id INT,
+    name VARCHAR(50),
+    CONSTRAINT pk_students PRIMARY KEY (id)
+);
+🔹 4️⃣ Naming a FOREIGN KEY
+CREATE TABLE orders (
+    order_id INT,
+    user_id INT,
+    CONSTRAINT fk_user
+    FOREIGN KEY (user_id)
+    REFERENCES users(id)
+);
+🔥 Why Naming Constraint Is Important?
+
+If you want to drop it later:
+
+ALTER TABLE users
+DROP CHECK chk_age;
+
+OR
+
+ALTER TABLE contacts
+DROP INDEX uq_email;
+
+If you don’t name it, you must check the system-generated name first.
+
+🎯 Best Practice Naming Convention
+Constraint	Example Name
+PRIMARY KEY	pk_tableName
+UNIQUE	uq_columnName
+FOREIGN KEY	fk_tableName
+CHECK	chk_columnName
+
+Example:
+
+pk_users
+uq_email
+chk_salary
+fk_orders_users  
+
+
+
+
+mysql> CREATE TABLE CON2
+    -> ( MOB VARCHAR(15) UNIQUE,
+    -> CONSTRAINT MOB_10_SE_KAM_NHI_HONA_CHAHIYE CHECK (LENGTH(MOB)>=10));   CONSTRAINT ISLIYE LIKH RAHE H BECAUSE YAHA PR YE SHOW KR RHA H AGAR AAPKO VIOLATED YA KUCCHH ERROR SHOW KAREGA 
+
+AND AAPKO SAMJH ME NHI AAYEGA THEN USKE JAGAH PR AAP CONSTARINT DAL KE UNDERSCORE ME JO BHI LIKHOGE USKO YE SHOW KARAYEGA TO AAPKO YA KISI KO BHI SAMJH ME AA JAYEGA 
+
+
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO CON2 VALUES (3939394);
+ERROR 3819 (HY000): Check constraint 'MOB_10_SE_KAM_NHI_HONA_CHAHIYE' is violated.   YE DEKHO AAPNE 10 SE KM DIYA H INPUT SO ERROR SHOW KR RAH H LIKE THIS 
+
+
+819 (HY000): Check constraint 'MOB_10_SE_KAM_NHI_HONA_CHAHIYE' is violated.
+mysql> INSERT INTO CON2 VALUES (7762845090)
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO CON2 VALUES (+917762845090)
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO CON2 VALUES (3939393829393);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CON2;
++---------------+
+| MOB           |
++---------------+
+| 3939393829393 |
+| 7762845090    |
+| 917762845090  |    
+
+
+
+                                                                        ALTER IN MYSQL : 
+
+✅ ALTER TABLE in MySQL
+
+ALTER TABLE is used to change the structure of an existing table.
+
+You can:
+
+Add column
+
+Delete column
+
+Modify column
+
+Rename column
+
+Add or drop constraints
+
+Rename table
+
+🔹 1️⃣ Add New Column
+ALTER TABLE contacts
+ADD address VARCHAR(100);
+
+🔹 2️⃣ Add Multiple Columns
+ALTER TABLE contacts
+ADD city VARCHAR(50),
+ADD pincode INT;
+
+🔹 3️⃣ Modify Column (Change Datatype / Add Constraint)
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(15);
+
+Add UNIQUE:
+
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(15) UNIQUE;
+🔹 4️⃣ Rename Column (Very Important)
+
+In MySQL 8+:
+
+ALTER TABLE contacts
+RENAME COLUMN mobile TO phone;
+
+Old method:
+
+ALTER TABLE contacts
+CHANGE mobile phone VARCHAR(15);
+
+⚠ In CHANGE, you must write datatype again.
+
+🔹 5️⃣ Drop Column
+ALTER TABLE contacts
+DROP COLUMN address;
+
+🔹 6️⃣ Add UNIQUE Constraint
+ALTER TABLE contacts
+ADD CONSTRAINT uq_email UNIQUE (email);
+
+🔹 7️⃣ Add CHECK Constraint
+ALTER TABLE contacts
+ADD CONSTRAINT chk_mobile
+CHECK (LENGTH(mobile) >= 10);
+
+🔹 8️⃣ Drop Constraint
+
+Drop UNIQUE:
+
+ALTER TABLE contacts
+DROP INDEX uq_email;
+
+Drop CHECK:
+
+ALTER TABLE contacts
+DROP CHECK chk_mobile;
+🔹 9️⃣ Rename Table
+ALTER TABLE contacts
+RENAME TO contact_details;
+🔥 Important Things
+
+MySQL checks existing data before adding constraints
+
+MODIFY changes datatype but keeps column name
+
+CHANGE renames column but requires datatype
+
+Only one PRIMARY KEY allowed  
+
+
+SHOW CREATE TABLE contacts;   // YE BATATA H KI AAP KAISE CRETAE KRTE HO  KYA KYA USED KR RHE HO JUST LIKE THIS IF YOU ARE CREATING SOMTHIN LIKE USING CREATE TABLE ,USED SPECIAL KEY PRIMARY ,UNIQUE,VARCHAR ETC SO ITS SHOW EACH PROCESS ABOUT YOUR DATA .  
+
+  
+RENAME + ADD COLUMN ; 
+
+ ALTER TABLE CONTACTS
+    -> ADD COLUMN CITY VARCHAR(50);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE CONTACTS
+    -> RENAME COLUMN CITY TO VILLAGE;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CONTACTS;
++------+----------------------+-----------------+---------+
+| ID   | EMAIL                | MOBILE          | VILLAGE |
++------+----------------------+-----------------+---------+
+|   44 | anup@123             | NULL            | NULL    |
+| NULL | NULL                 | 2342432145      | NULL    |
+|    1 | YUVII@GMAIL.COM      | -7762844999     | NULL    |
+|    1 | YUVII232@GMAIL.COM   | 77628450904534  | NULL    |
+|    1 | YUVI2DDSAI@GMAIL.COM | +91 -7762845090 | NULL    |
++------+----------------------+-----------------+---------+
+5 rows in set (0.00 sec)
+
+mysql>  
+
+
+DROP COLUMN 
+
+mysql> ALTER TABLE CONTACTS
+    -> DROP COLUMN CITY;
+ERROR 1091 (42000): Can't DROP 'CITY'; check that column/key exists
+mysql> ALTER TABLE CONTACTS
+    -> DROP COLUMN VILLAGE;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CONTACTS;
++------+----------------------+-----------------+
+| ID   | EMAIL                | MOBILE          |
++------+----------------------+-----------------+
+|   44 | anup@123             | NULL            |
+| NULL | NULL                 | 2342432145      |
+|    1 | YUVII@GMAIL.COM      | -7762844999     |
+|    1 | YUVII232@GMAIL.COM   | 77628450904534  |
+|    1 | YUVI2DDSAI@GMAIL.COM | +91 -7762845090 |
++------+----------------------+-----------------+  
+
+
+mysql> RENAME ME HAMESHA APNA COLUMN NAME THEN [TO ] KA USED KARENGE LIKE THIS
+ ALTER TABLE CONTACTS
+RENAME COLUMN CONTACTS TO PHONE ;  
+
+                                                                                        RENAME TO TABLE NAME ;
+HOW TO CHANGE TABLE NAME 
+
+ALTER TABLE CONTACTS
+    -> RENAME TO MYCONTACS;   ISME RENAME DEKAR [TO] KA USED KARENGE THEN JO NAME RAKHNA CHATE H USKA USED KARENGE LIKE THIS 
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SELECT * FROM CONTACTS;
+ERROR 1146 (42S02): Table 'bank_db.contacts' doesn't exist
+mysql> SELECT * FROM MYCONTACTS;
+ERROR 1146 (42S02): Table 'bank_db.mycontacts' doesn't exist
+mysql> SELECT * FROM MYCONTACS;
++------+----------------------+-----------------+
+| ID   | EMAIL                | MOBILE          |
++------+----------------------+-----------------+
+|   44 | anup@123             | NULL            |
+| NULL | NULL                 | 2342432145      |
+|    1 | YUVII@GMAIL.COM      | -7762844999     |
+|    1 | YUVII232@GMAIL.COM   | 77628450904534  |
+|    1 | YUVI2DDSAI@GMAIL.COM | +91 -7762845090 |
++------+----------------------+-----------------+
+
+
+DUSRA METHOD :  RENAME TABLE MYCONTACS TO CONTACT_DETAILS : SO AYESE AAP  RENAME USED KARO THEN TABLE AND THEN APNE PAHLE WALE TABLE KA NAME LIKE MYCONTACTS AND USKE BAD TO KA USED KARO THEN JO BHI TABLE KA NAME USED KARO 
+
+ RENAME TABLE MYCONTACS TO CONTACT_DETAILS;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT * FROM MYCONTACTS;
+ERROR 1146 (42S02): Table 'bank_db.mycontacts' doesn't exist
+mysql> SELECT * FROM CONTACT_DETAILS;
++------+----------------------+-----------------+
+| ID   | EMAIL                | MOBILE          |
++------+----------------------+-----------------+
+|   44 | anup@123             | NULL            |
+| NULL | NULL                 | 2342432145      |
+|    1 | YUVII@GMAIL.COM      | -7762844999     |
+|    1 | YUVII232@GMAIL.COM   | 77628450904534  |
+|    1 | YUVI2DDSAI@GMAIL.COM | +91 -7762845090 |
++------+----------------------+-----------------+
+ 
+
+HOW TO MODIFY A COLUMN ? 
+
+EX: CHANGING DATATYPE 
+OR ADDING DEFAULT VALUE ETC 
+
+MODIFY KA USED KR KE TUM COLUMN KO CHANGE KAR SAKTE HO AND DEFAULT VALUE BHI ADD KR SAKRE HO + DATA TYPES KO BHI CHANGE KR SAAKTE HO 
+
+HOW TO ADD DEFAULT VALUES IN TABLE OR COLUMN 
+ALTER TABLE CONTACTS 
+MODIFY MOBILE NO VARHCAR(50) DEFAULT 'UNKNOWN'; 
+
+DESC CONTACTS;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| ID     | int         | YES  |     | NULL    |       |
+| EMAIL  | varchar(50) | YES  | UNI | NULL    |       |
+| MOBILE | varchar(15) | YES  | UNI | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.05 sec)
+
+mysql> ALTER TABLE CONTACTS
+    -> MODIFY MOBILE VARCHAR(20);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC CONTACTS;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| ID     | int         | YES  |     | NULL    |       |
+| EMAIL  | varchar(50) | YES  | UNI | NULL    |       |
+| MOBILE | varchar(20) | YES  | UNI | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE CONTACTS
+    -> MODIFY MOBILE VARCHAR(20) DEFAULT 'UNKNOWN';
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC CONTACTS;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| ID     | int         | YES  |     | NULL    |       |
+| EMAIL  | varchar(50) | YES  | UNI | NULL    |       |
+| MOBILE | varchar(20) | YES  | UNI | UNKNOWN |       |
++--------+-------------+------+-----+---------+-------+ 
+
+  
+
+✅ RENAME and MODIFY in MySQL (Clear Difference)
+
+RENAME changes the column name. MODIFY changes the datatype or properties.
+
+Many students confuse these two. Let’s make it very clear 👇
+
+🔹 1️⃣ RENAME COLUMN
+
+👉 Used to change column name only.
+
+✅ MySQL 8+ Syntax
+ALTER TABLE contacts
+RENAME COLUMN mobile TO phone;
+
+✔ Name changes
+✔ Datatype stays same
+
+🔹 2️⃣ MODIFY COLUMN
+
+👉 Used to change datatype, size, or constraints
+👉 Column name remains same
+
+Example
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(20);
+
+Here:
+
+Name = mobile (same)
+
+Datatype changed
+
+🔹 3️⃣ CHANGE (Rename + Modify Together)
+
+If you want to rename AND change datatype in one command:
+
+ALTER TABLE contacts
+CHANGE mobile phone VARCHAR(20);
+
+⚠ Important:
+You must write datatype again.
+
+🔥 Quick Comparison Table
+Command	Changes Name	Changes Datatype
+RENAME	✅ Yes   	❌ No
+MODIFY	❌ No	        ✅ Yes
+CHANGE	✅ Yes  	✅ Yes
+
+🔹 Real Practical Example
+
+Current Table
+| ID | EMAIL | MOBILE |
+Rename MOBILE → PHONE
+
+ALTER TABLE contacts
+RENAME COLUMN mobile TO phone;
+
+Increase size of PHONE
+ALTER TABLE contacts
+MODIFY phone VARCHAR(20);
+
+Rename + Modify Together
+ALTER TABLE contacts
+CHANGE phone contact_number VARCHAR(25);
+⚠ Important Thing (From Your Previous Error)
+
+If column is used in:
+
+CHECK constraint
+
+FOREIGN KEY
+
+UNIQUE
+
+INDEX
+
+You must drop constraint first before renaming.
+
+Since you're preparing for internship, interviewer may ask:
+
+
+
+
+✅ MODIFY in MySQL
+
+MODIFY is used to change the datatype, size, or constraints of an existing column — but NOT the column name.
+
+🔹 Basic Syntax
+ALTER TABLE table_name
+MODIFY column_name new_datatype;
+🔹 1️⃣ Change Datatype
+Before:
+mobile VARCHAR(10)
+Increase size:
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(15);
+
+✔ Column name same
+✔ Size changed
+
+🔹 2️⃣ Add Constraint Using MODIFY
+
+Add NOT NULL:
+
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(15) NOT NULL;
+
+Add UNIQUE:
+
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(15) UNIQUE;
+🔹 3️⃣ Add DEFAULT Value
+ALTER TABLE contacts
+MODIFY city VARCHAR(50) DEFAULT 'Patna';
+🔹 4️⃣ Remove NOT NULL
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(15) NULL;
+🔥 Important Rules
+
+1️⃣ You must write datatype again
+2️⃣ Column name cannot be changed using MODIFY
+3️⃣ Existing data must satisfy new constraint
+4️⃣ If constraint fails → MySQL gives error
+
+🔹 Example of Error
+
+If column has NULL values:
+
+ALTER TABLE contacts
+MODIFY mobile VARCHAR(15) NOT NULL;
+
+❌ Error if any row contains NULL
+
+🔹 Difference From CHANGE
+MODIFY	CHANGE
+Cannot rename column	Can rename column
+Must write datatype	Must write datatype
+Used to alter structure	Used to rename + alter
+🎯 Interview Question
+
+Q: Can MODIFY rename a column?
+Answer: ❌ No. It only changes datatype or constraints.  
+
+
+
+                                                                  ✅ Relationships in MySQL
+
+
+Relationships connect tables using Primary Key and Foreign Key.
+
+In real projects (internship / companies), data is never stored in one table.
+Tables are connected using relationships.
+
+🔹 Why Relationships Are Needed?
+
+Suppose:
+
+One table → customers
+
+One table → orders
+
+Instead of storing customer details again and again in orders table,
+we connect them using relationships.
+
+🔥 Types of Relationships in MySQL
+
+There are 3 main types:
+
+1️⃣ One-to-One (1:1)
+2️⃣ One-to-Many (1:N)
+3️⃣ Many-to-Many (M:N)
+
+1️⃣ One-to-One (1:1)
+
+👉 One record in Table A is linked to one record in Table B.
+
+Example:
+
+One person → One passport
+
+CREATE TABLE persons (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE passports (
+    passport_id INT PRIMARY KEY,
+    person_id INT UNIQUE,
+    FOREIGN KEY (person_id) REFERENCES persons(id)
+);
+
+Here:
+
+person_id is UNIQUE
+
+So one person can have only one passport
+
+2️⃣ One-to-Many (1:N) ⭐ (Most Important)
+
+👉 One record in Table A
+👉 Multiple records in Table B
+
+Example:
+
+One customer → Many orders
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+Here:
+
+One customer
+
+Many orders
+
+Foreign key creates relationship
+
+3️⃣ Many-to-Many (M:N)
+
+👉 Many records in Table A
+👉 Many records in Table B
+
+We need a third table (junction table).
+
+Example:
+
+Students and Courses
+
+One student → Many courses
+One course → Many students
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50)
+);
+
+CREATE TABLE student_course (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+This is called a Junction Table.
+
+🔥 Important Concepts
+🔹 Primary Key
+
+Uniquely identifies each row.
+
+🔹 Foreign Key
+
+Connects one table to another.
+
+Example:
+
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+🔹 ON DELETE & ON UPDATE (Very Important)
+FOREIGN KEY (customer_id)
+REFERENCES customers(customer_id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+CASCADE means:
+
+If parent row deleted → child rows deleted automatically.
+
+🎯 Interview-Level Understanding
+
+Most commonly used relationship:
+👉 One-to-Many
+
+Most commonly asked:
+👉 Difference between Primary Key and Foreign Key
+👉 What is ON DELETE CASCADE?
+
+
+Very good 👍 this is exactly the type of question asked in interviews.
+
+Let’s understand with real-world examples (not textbook ones).
+
+✅ 1️⃣ One-to-One (1:1) Relationship
+
+One record in Table A is connected to only one record in Table B.
+
+🔹 Real Example: User and Aadhaar Card
+
+One person → One Aadhaar card
+
+One Aadhaar card → One person
+
+Tables:
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE aadhaar (
+    aadhaar_no BIGINT PRIMARY KEY,
+    user_id INT UNIQUE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+Why UNIQUE?
+
+Because:
+
+One user can have only one Aadhaar
+
+So user_id must be UNIQUE
+
+✅ 2️⃣ One-to-Many (1:N) Relationship ⭐ (Most Common in Real Life)
+
+One record in Table A can have many records in Table B.
+
+🔹 Real Example: Customer and Orders (Amazon Flipkart type system)
+
+One customer → Many orders
+
+One order → Belongs to one customer
+
+Tables:
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+Real Meaning:
+
+If customer_id = 1
+
+Orders table may have:
+
+order_id | customer_id
+101      | 1
+102      | 1
+103      | 1
+
+One customer → 3 orders
+
+This is the most used relationship in real projects.
+
+✅ 3️⃣ Many-to-Many (M:N) Relationship
+
+Many records in Table A relate to many records in Table B.
+
+🔹 Real Example: Students and Courses
+
+One student → Many courses
+
+One course → Many students
+
+You need a third table (junction table).
+
+Tables:
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50)
+);
+
+CREATE TABLE student_course (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+Real Meaning:
+
+Student Rahul studies:
+
+Math
+
+Science
+
+And Math course has:
+
+Rahul
+
+Ankit
+
+Priya
+
+So many students ↔ many courses
+
+🔥 Quick Comparison
+Relationship	Real Example	Foreign Key Where?
+One-to-One	User – Aadhaar	In second table + UNIQUE
+One-to-Many	Customer – Orders	In "many" table
+Many-to-Many	Students – Courses	In junction table
+🎯 Interview Tip
+
+If interviewer asks:
+
+👉 Which relationship is most common?
+
+Answer:
+One-to-Many  most important so you need to focus on one to many relationship in MySQL 
+
+agar hamne ek store name ka table banaya and we need to store following data such as name,date,customor id ,email all detail 
+
+so hamare store pr raju aaya to uska data store kr liya but again wah kl ya parso aaya fir se uska data  store kara and again fir aaya to uska data store  krna pada so thats  means code me ya data me bar bar repetition used krna achi nhi h wah code ko lengthy bana deta so that means hm customer id ko dusre table me used kr lenge 
+
+
+so jab hm primary key as a reference used kr rhe h dusri table me to usko foreign key bolte h ✅ Full Query
+
+
+  INFORMATION_ SCHEMA ::
+
+
+SELECT CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME   YE BATATA H KI COLUMN MEANS ,TABLE COLUMN NAME WAGERA WAGERA ;
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE TABLE_NAME = 'ORDERS';
+
+
+🔎 What Is INFORMATION_SCHEMA?
+
+:highlight
+
+Metadata means:
+
+👉 Information about tables
+👉 Columns
+👉 Constraints
+👉 Keys
+👉 Foreign keys
+
+It does NOT store your actual data.
+It stores structure information.
+
+🔹 What Is KEY_COLUMN_USAGE?
+
+It is a system table inside INFORMATION_SCHEMA.
+
+It stores:
+
+Primary keys
+
+Foreign keys
+
+Unique keys
+
+Constraint details
+
+🔍 Breaking the Query
+1️⃣ SELECT CONSTRAINT_NAME
+
+Shows:
+
+Name of constraint
+Example:
+
+PRIMARY
+orders_ibfk_1
+2️⃣ COLUMN_NAME
+
+Shows:
+
+Which column has the constraint
+
+Example:
+
+cust_id
+ord_ID
+3️⃣ REFERENCED_TABLE_NAME
+
+Shows:
+
+If it is a foreign key,
+
+Which parent table it references
+
+Example:
+
+customer
+
+If it is primary key → NULL
+
+4️⃣ WHERE TABLE_NAME = 'ORDERS'
+
+Means:
+👉 Show constraint information only for table ORDERS
+
+🎯 What This Query Actually Does
+
+It shows:
+
+👉 All keys and constraints
+👉 Of table ORDERS
+👉 Including foreign key relationships
+
+🔥 Real Example Output
+
+If your ORDERS table has:
+
+PRIMARY KEY on ord_ID
+
+FOREIGN KEY cust_id references customer
+
+Result might look like:
+
+CONSTRAINT_NAME | COLUMN_NAME | REFERENCED_TABLE_NAME
+----------------------------------------------------
+PRIMARY         | ord_ID      | NULL
+orders_ibfk_1   | cust_id     | customer
+
+Meaning:
+
+ord_ID → Primary Key
+
+cust_id → Foreign Key → References customer table
+
+🧠 Why This Is Useful?
+
+In real companies:
+
+When you forget constraint name
+
+When foreign key error happens
+
+When renaming columns
+
+When debugging database structure
+
+We use INFORMATION_SCHEMA.
+
+🎯 Interview Answer
+
+If interviewer asks:
+
+"What is INFORMATION_SCHEMA.KEY_COLUMN_USAGE?"
+
+You answer:
+
+It is a system table in MySQL that stores information about key constraints such as primary keys and foreign keys for all tables.
+
+
+
+✅ INFORMATION_SCHEMA in MySQL
+
+:highlight
+
+It does NOT store your actual data.
+It stores information about:
+
+Databases
+
+Tables
+
+Columns
+
+Constraints
+
+Keys
+
+Indexes
+
+Triggers
+
+Views
+
+🔹 What is Metadata?
+
+Metadata = "Data about data"
+
+Example:
+
+Your table:
+
+customers
+
+Your actual data:
+
+1  Anup
+2  Rahul
+
+Metadata about this table:
+
+How many columns?
+
+What is the datatype?
+
+Which column is primary key?
+
+Which column is foreign key?
+
+All this is stored in INFORMATION_SCHEMA.
+
+🔹 How to See It?
+SHOW DATABASES;
+
+You will see:
+
+information_schema
+mysql
+performance_schema
+sys
+your_database
+🔥 Important Tables Inside INFORMATION_SCHEMA
+1️⃣ TABLES
+
+Shows all tables.
+
+SELECT * 
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = 'your_database';
+2️⃣ COLUMNS
+
+Shows column details.
+
+SELECT COLUMN_NAME, DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'customers';
+3️⃣ KEY_COLUMN_USAGE
+
+Shows primary key & foreign key info.
+
+SELECT *
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE TABLE_NAME = 'orders';
+4️⃣ TABLE_CONSTRAINTS
+
+Shows constraint types:
+
+SELECT *
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'orders';
+🔥 Real-Life Usage (Very Important)
+
+In companies, we use INFORMATION_SCHEMA to:
+
+Debug foreign key errors
+
+Find constraint names
+
+Check structure of large databases
+
+Auto-generate documentation
+
+Write dynamic SQL
+
+🎯 Example: Find All Foreign Keys in Your Database
+SELECT TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE REFERENCED_TABLE_NAME IS NOT NULL
+AND TABLE_SCHEMA = 'your_database';
+
+This shows all foreign key relationships.
+
+🧠 Interview Answer (Short & Professional)
+
+INFORMATION_SCHEMA is a system database in MySQL that stores metadata about databases, tables, columns, constraints, and keys. 
+
+ select CONSTRAINT_NAME,COLUMN_NAME,REFERENCED_TABLE_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME='ORDERS';
++-----------------+-------------+-----------------------+
+| CONSTRAINT_NAME | COLUMN_NAME | REFERENCED_TABLE_NAME |
++-----------------+-------------+-----------------------+
+| PRIMARY         | ord_ID      | NULL                  |
+| orders_ibfk_1   | cust_id     | customer              |
++-----------------+-------------+-----------------------+   
+
+
+ create table order (
+    -> ord_ID int auto_increment  primary key,
+    -> date DATE ,
+    -> amount decimal(10, 2),
+    -> cust_id int ,
+    -> foreign key (cust_id) references customer(cust_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (
+ord_ID int auto_increment  primary key,
+date DATE ,
+amount decimal(10, 2' at line 1
+
+WHY SO THIS ERROR BECOZ YOU ARE USING RESERVED KEYWORD IT MEANS ORDER IS ORDER BY KEYWORD SO U CAN'T USED RESERVED KEYWORD AS TABLE . SO THATS IT 
+
+
+
+
+
+
+
+Very good 👏 this is a common beginner mistake.
+
+🔴 Why You Are Getting This Error?
+
+Error:
+
+ERROR 1064 (42000)
+
+The problem is here 👇
+
+create table order (
+
+:highlight
+
+MySQL already uses ORDER in:
+
+ORDER BY
+
+So you cannot use order directly as a table name.
+
+✅ How To Fix It
+✔ Option 1 (Best Practice) — Change Table Name
+CREATE TABLE orders (
+    ord_ID INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE,
+    amount DECIMAL(10,2),
+    cust_id INT,
+    FOREIGN KEY (cust_id) REFERENCES customer(cust_id)
+);
+
+👉 Use orders instead of order
+👉 This is professional way ✅
+
+✔ Option 2 — Use Backticks (Not Recommended)
+CREATE TABLE `order` (
+    ord_ID INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE,
+    amount DECIMAL(10,2),
+    cust_id INT,
+    FOREIGN KEY (cust_id) REFERENCES customer(cust_id)
+);
+
+This tells MySQL:
+
+Treat order as table name, not keyword
+
+But in real projects, we avoid reserved words.
+
+🔥 One More Important Check
+
+Make sure parent table exists:
+
+CREATE TABLE customer (
+    cust_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+Foreign key will fail if:
+
+Parent table not created
+
+Parent column not PRIMARY KEY
+
+Datatypes not same
+
+🎯 Interview-Level Understanding
+
+Reserved keywords examples:
+
+ORDER
+
+GROUP
+
+SELECT
+
+TABLE
+
+WHERE
+
+Avoid using them as table or column names.   
+
+
+
+INSERT INTO CUSTOMERS (NAME,EMAIL) VALUES ('ANUP ' , 'anup94685@gmail.com'),('Yuvii','YUviisingh7762@gmail.com');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++---------+-------+--------------------------+
+| cust_id | name  | email                    |
++---------+-------+--------------------------+
+|       1 | ANUP  | anup94685@gmail.com      |
+|       2 | Yuvii | YUviisingh7762@gmail.com |
++---------+-------+--------------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into orders (date,amount,cust_id) values (curdate(),500.343,1);
+Query OK, 1 row affected, 1 warning (0.02 sec)
+
+mysql> insert into orders (date,amount,cust_id) values (curdate(),340.33,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into orders (date,amount,cust_id) values (curdate(),343.33,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into orders (date,amount,cust_id) values (curdate(),343.33,2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into orders (date,amount,cust_id) values (curdate(),343.33,6);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`store_db`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `customers` (`cust_id`))
+
+NOTE: YE ERROR ISLIYE AAYA JO PARENT TABLE H CUSTOMER AND CHILD TABLE ORDERS SO PARENTS TABLE ME CUST_ID 2 HI HAI 1 AUR 2 USASE JYADA NHI H AND AAPNE ORDERS TABLE ME 6 CUST_ID LI HAI SO ERROR SHOW KAREGA AND CUST_ID 2 TAK H TO AAP 2 TK HI CUST_ID LE SAKTE HO NAKI 6 TK 
+
+
+
+mysql> select * from orders;
++--------+------------+--------+---------+
+| ord_ID | date       | amount | cust_id |
++--------+------------+--------+---------+
+|      1 | 2026-02-26 | 500.34 |       1 |
+|      2 | 2026-02-26 | 340.33 |       1 |
+|      3 | 2026-02-26 | 343.33 |       1 |
+|      4 | 2026-02-26 | 343.33 |       2 |
++--------+------------+--------+---------+   
+
+                                           JOIN IN MYSQL 
+
+JOIN OPERATION IS USED TO COMBINE ROWS FROM TWO OR MORE TABLES BASED ON A RELATED COLUMN BETWEEN THEM.  
+
+
+✅ JOIN in MySQL
+
+:highlight
+
+In real projects, data is stored in multiple tables.
+JOIN helps us connect and fetch related data.
+
+🔥 Why We Need JOIN?
+
+Example:
+
+Table 1: customers
+customer_id	name
+1	Anup
+2	Rahul
+Table 2: orders
+order_id	customer_id	amount
+101	1	500
+102	1	700
+103	2	300
+
+Now suppose you want:
+
+👉 Customer name + Order amount
+
+We need JOIN.
+
+🔹 Types of JOIN in MySQL
+
+1️⃣ INNER JOIN
+2️⃣ LEFT JOIN
+3️⃣ RIGHT JOIN
+4️⃣ CROSS JOIN
+
+1️⃣ INNER JOIN (Most Important ⭐)
+
+:highlight
+
+SELECT customers.name, orders.amount
+FROM customers
+INNER JOIN orders
+ON customers.customer_id = orders.customer_id;
+
+Result:
+
+name	amount
+Anup	500
+Anup	700
+Rahul	300
+
+Only matching records appear.
+
+2️⃣ LEFT JOIN
+
+:highlight
+
+SELECT customers.name, orders.amount
+FROM customers
+LEFT JOIN orders
+ON customers.customer_id = orders.customer_id;
+
+If a customer has no order → amount will be NULL.
+
+3️⃣ RIGHT JOIN
+
+:highlight
+
+SELECT customers.name, orders.amount
+FROM customers
+RIGHT JOIN orders
+ON customers.customer_id = orders.customer_id;
+
+
+
+4️⃣ CROSS JOIN
+
+EVERY ROW FROM ONE TABLE IS COMBINED WITH EVERY ROW FROM ANOTHER TABLE .
+
+:highlight
+
+SELECT *
+FROM customers
+CROSS JOIN orders;
+
+If 2 customers and 3 orders → 2 × 3 = 6 rows
+
+🔥 Visual Understanding
+JOIN Type	What It Returns
+INNER	        Only matching data
+LEFT	      All left + matched right
+RIGHT	      All right + matched left
+CROSS	     All combinations
+🎯 Real Interview Question
+
+Q: Which JOIN is most used in real projects?
+👉 INNER JOIN
+
+Q: What is difference between INNER and LEFT JOIN?
+👉 INNER shows only matching rows
+👉 LEFT shows all left table rows even if no match
+
+🚀 Practical Tip
+
+Always join using Primary Key & Foreign Key.
+
+Example:
+
+ON customers.customer_id = orders.customer_id
+
+Since you're preparing for internship, JOIN questions are very common.  
+
+
+
+                                                                              
+
+
+                                                                               ✅ CROSS JOIN in MySQL
+
+:highlight
+
+🔹 Simple Meaning
+
+If:
+
+Table A has 3 rows
+
+Table B has 4 rows
+
+Result = 3 × 4 = 12 rows
+
+It combines everything with everything.
+
+🔹 Syntax
+SELECT * FROM table1
+CROSS JOIN table2;
+
+You can also write (older style):
+
+SELECT * FROM table1, table2;
+
+Both give same result.
+
+🔥 Example
+👇 Table: colors
+color
+Red
+Blue
+👇 Table: sizes
+size
+S
+M
+L
+Query:
+SELECT * FROM colors
+CROSS JOIN sizes;
+
+Result:
+color	size
+Red	S
+Red	M
+Red	L
+Blue	S
+Blue	M
+Blue	L
+
+👉 2 × 3 = 6 rows
+
+🔥 When Is CROSS JOIN Used?
+
+✅ Product combinations
+✅ Generating test data
+✅ Menu combinations (Pizza size × toppings)
+✅ Creating matrix reports
+
+⚠ Important Warning
+
+If both tables are large:
+
+1000 rows × 1000 rows = 10,00,000 rows 😱
+
+It can slow down database.
+
+So use carefully.
+
+🔹 Difference Between INNER JOIN and CROSS JOIN
+INNER JOIN	       CROSS JOIN
+Uses condition (ON)	No condition
+Only matching rows	All combinations
+Most used	        Rarely used
+
+🎯 Interview Question
+
+Q: Does CROSS JOIN need ON condition?
+👉 No.
+
+Q: What is Cartesian product?
+👉 All possible row combinations between two tables.  
+
+NOTE : PAHLI BAAT YE REPETATION KO SHOW KRTA H AND JITNA BHI POSSIBLE COMBINATION H UN SABKO SHOW KRTA H IT MEASN ISASE JAYADA POSSIBLE COMBINATION NHI HO SAKTE H 
+
+ CREATE TABLE COLOURS
+    -> ( RANG VARCHAR(50));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC COLOURS;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| RANG  | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE SIZES (
+    -> SIZE INT PRIMARY KEY);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO COLOURS VALUES ('RED','GREEN','YELLOW','PINK','SKYBLUE');   ERROR SHOW HO RHA H BECOZ AAPNE EK HI VALUES LI H SO COMMANS SE NHI HOGA USKE LIYE ALAG BRACKET LAGENGE LIKE 
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO COLOURS VALUES ('RED');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO COLOURS VALUES ('PINK'),('BLUE'),('SKYBLUE');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM COLOURS;
++---------+
+| RANG    |
++---------+
+| RED     |
+| PINK    |
+| BLUE    |
+| SKYBLUE |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE SIZES
+    -> MODIFY COLUMN SIZE VARCHAR(15);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO SIZES VALUES ('X');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO SIZES VALUES ('M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO SIZES VALUES ('L');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO SIZES VALUES ('XL');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM SIZES;
++------+
+| SIZE |
++------+
+| L    |
+| M    |
+| X    |
+| XL   |
++------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COLOURS                     METHOD 1. USE CROSS JOIN TO COMBINE EVERYTHING LIKE THIS 
+    -> CROSS JOIN SIZES;
++---------+------+
+| RANG    | SIZE |
++---------+------+
+| SKYBLUE | L    |
+| BLUE    | L    |
+| PINK    | L    |
+| RED     | L    |
+| SKYBLUE | M    |
+| BLUE    | M    |
+| PINK    | M    |
+| RED     | M    |
+| SKYBLUE | X    |
+| BLUE    | X    |
+| PINK    | X    |
+| RED     | X    |
+| SKYBLUE | XL   |
+| BLUE    | XL   |
+| PINK    | XL   |
+| RED     | XL   |
++---------+------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COLOURS,SIZES;       METHOD 2. ISME AAP COMMAS DEKAR CROSS JOIN KA USED KR SAKTE H WITHOUT USING CROSS JOIN NAME JITNA POSSIBLE COMBINATION H USKO SHOW KRTA H 
++---------+------+
+| RANG    | SIZE |
++---------+------+
+| SKYBLUE | L    |
+| BLUE    | L    |
+| PINK    | L    |
+| RED     | L    |
+| SKYBLUE | M    |
+| BLUE    | M    |
+| PINK    | M    |
+| RED     | M    |
+| SKYBLUE | X    |
+| BLUE    | X    |
+| PINK    | X    |
+| RED     | X    |
+| SKYBLUE | XL   |
+| BLUE    | XL   |
+| PINK    | XL   |
+| RED     | XL   |
++---------+------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CUSTOMERS , ORDERS;                                                   JO AAPNE TABLE BANAYA H USKO SHOW KR RHA H HOW TO USED THIS 
++---------+-------+--------------------------+--------+------------+--------+---------+
+| cust_id | name  | email                    | ord_ID | date       | amount | cust_id |
++---------+-------+--------------------------+--------+------------+--------+---------+
+|       2 | Yuvii | YUviisingh7762@gmail.com |      1 | 2026-02-26 | 500.34 |       1 |
+|       1 | ANUP  | anup94685@gmail.com      |      1 | 2026-02-26 | 500.34 |       1 |
+|       2 | Yuvii | YUviisingh7762@gmail.com |      2 | 2026-02-26 | 340.33 |       1 |
+|       1 | ANUP  | anup94685@gmail.com      |      2 | 2026-02-26 | 340.33 |       1 |
+|       2 | Yuvii | YUviisingh7762@gmail.com |      3 | 2026-02-26 | 343.33 |       1 |
+|       1 | ANUP  | anup94685@gmail.com      |      3 | 2026-02-26 | 343.33 |       1 |
+|       2 | Yuvii | YUviisingh7762@gmail.com |      4 | 2026-02-26 | 343.33 |       2 |
+|       1 | ANUP  | anup94685@gmail.com      |      4 | 2026-02-26 | 343.33 |       2 |
++---------+-------+--------------------------+--------+------------+--------+---------+   
+
+
+
+                                                                            ✅ INNER JOIN in MySQL
+
+
+RETURNS ONLY THE ROWS WHERE THERE IS A MATCH BETWEEN THE SPECIFIED COLUMNS IN BOTH THE LEFT (OR FIRST) AND RIGHT (OR SECOND) TABLES .
+
+
+:highlight
+
+It is the most commonly used JOIN in real projects.
+
+🔹 Basic Syntax
+SELECT column_names
+FROM table1
+INNER JOIN table2
+ON table1.common_column = table2.common_column;
+🔥 Real Example
+👇 Table: customers
+customer_id	name
+1	Anup
+2	Rahul
+3	Amit
+👇 Table: orders
+order_id	customer_id	amount
+101	1	500
+102	1	700
+103	2	300
+🔹 Query
+SELECT customers.name, orders.amount
+FROM customers
+INNER JOIN orders
+ON customers.customer_id = orders.customer_id;
+🔹 Result
+name	amount
+Anup	500
+Anup	700
+Rahul	300
+
+👉 Amit is NOT shown
+Because he has no matching order.
+
+🔥 Important Rule
+
+INNER JOIN only returns rows where:
+
+table1.column = table2.column
+
+If no match → row is ignored.
+
+🔹 Short Form (Professional Style)
+SELECT c.name, o.amount
+FROM customers c
+INNER JOIN orders o
+ON c.customer_id = o.customer_id;
+
+Using aliases makes query cleaner.
+
+🔥 INNER JOIN with WHERE
+SELECT c.name, o.amount
+FROM customers c
+INNER JOIN orders o
+ON c.customer_id = o.customer_id
+WHERE o.amount > 400;
+🔹 Visual Understanding
+
+Customers:
+1 ✅
+2 ✅
+3 ❌ (no match)
+
+Orders:
+Only rows that match with customers are returned.
+
+🎯 Interview-Level Questions
+
+Q: What is difference between INNER JOIN and LEFT JOIN?
+👉 INNER JOIN shows only matching rows
+👉 LEFT JOIN shows all left table rows even if no match
+
+Q: Is ON clause mandatory in INNER JOIN?
+👉 Yes (to define matching condition)  
+
+
+> SELECT * FROM CUSTOMERS
+    -> INNER JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID;
+
+AAPNE PAHLE CUSTOMER ID KA INFORMATION DIYA SO FIRST YE CUSTOMER ID KA INFORMATION DEGA THEN AFTER ORDERS ID KA INFORMATION DEGA AAPKE INPUT KE ACCORDING AND THEN COMBINE IT LET SEE BELOW 
+
++---------+-------+--------------------------+--------+------------+--------+---------+
+| cust_id | name  | email                    | ord_ID | date       | amount | cust_id |
++---------+-------+--------------------------+--------+------------+--------+---------+
+|       1 | ANUP  | anup94685@gmail.com      |      1 | 2026-02-26 | 500.34 |       1 |
+|       1 | ANUP  | anup94685@gmail.com      |      2 | 2026-02-26 | 340.33 |       1 |
+|       1 | ANUP  | anup94685@gmail.com      |      3 | 2026-02-26 | 343.33 |       1 |
+|       2 | Yuvii | YUviisingh7762@gmail.com |      4 | 2026-02-26 | 343.33 |       2 |
++---------+-------+--------------------------+--------+------------+--------+---------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * FROM CUSTOMERS
+    -> INNER JOIN ORDERS
+    -> ON CUSTOMERS.CUST_ID = ORDERS.CUST_ID;
++---------+-------+--------------------------+--------+------------+--------+---------+
+| cust_id | name  | email                    | ord_ID | date       | amount | cust_id |
++---------+-------+--------------------------+--------+------------+--------+---------+
+|       1 | ANUP  | anup94685@gmail.com      |      1 | 2026-02-26 | 500.34 |       1 |
+|       1 | ANUP  | anup94685@gmail.com      |      2 | 2026-02-26 | 340.33 |       1 |
+|       1 | ANUP  | anup94685@gmail.com      |      3 | 2026-02-26 | 343.33 |       1 |
+|       2 | Yuvii | YUviisingh7762@gmail.com |      4 | 2026-02-26 | 343.33 |       2 |
++---------+-------+--------------------------+--------+------------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ORDERS
+    -> INNDER JOIN CUSTOMERS
+    -> ON CUSTOMERS.CUST_ID = ORDERS.CUST_ID;;
+ERROR 1054 (42S22): Unknown column 'ORDERS.CUST_ID' in 'on clause'
+ERROR:
+No query specified
+
+mysql> SELECT * FROM ORDERS
+    -> INNER JOIN CUSTOMERS
+    -> ON CUSTOMERS.CUST_ID = ORDERS.CUST_ID;                              BECOZ PAHLE  ORDERS ID KA SARA DATA KO RETURN KAREGA THEN   CUSTOMERS ID KA SARA DATA RETURN AND COMBINED IT SO THAT IS 
++--------+------------+--------+---------+---------+-------+--------------------------+
+| ord_ID | date       | amount | cust_id | cust_id | name  | email                    |
++--------+------------+--------+---------+---------+-------+--------------------------+
+|      1 | 2026-02-26 | 500.34 |       1 |       1 | ANUP  | anup94685@gmail.com      |
+|      2 | 2026-02-26 | 340.33 |       1 |       1 | ANUP  | anup94685@gmail.com      |
+|      3 | 2026-02-26 | 343.33 |       1 |       1 | ANUP  | anup94685@gmail.com      |
+|      4 | 2026-02-26 | 343.33 |       2 |       2 | Yuvii | YUviisingh7762@gmail.com | 
+
+
+ SELECT CUSTOMERS.NAME , ORDERS.AMOUNT FROM CUSTOMERS             INNER JOIN KA USED KR KE AAP SPECIFIC CHIZ KO BHI PRINT KARA SAKTI HO LIKE THIS 
+    -> INNER JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID;
++-------+--------+
+| NAME  | AMOUNT |
++-------+--------+
+| ANUP  | 500.34 |
+| ANUP  | 340.33 |
+| ANUP  | 343.33 |
+| Yuvii | 343.33 |
++-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CUSTOMERS.NAME , ORDERS.DATE FROM CUSTOMERS
+    -> INNER JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID;
++-------+------------+
+| NAME  | DATE       |
++-------+------------+
+| ANUP  | 2026-02-26 |
+| ANUP  | 2026-02-26 |
+| ANUP  | 2026-02-26 |
+| Yuvii | 2026-02-26 |
++-------+------------+
+
+
+NOTE IMPORTANT : EK CHIZ YAD RAKHNA HAMESHA AGAR PARENT TABLE ME CUSTOMER ID 3 H AND CHILE TABLE(ORDERS) ME CUST_ID 3 NHI H AND AAP INNER JOIN USED KR RHE HO SO IT CAN NOT SHOW TAHA DATA ABOUT CUST_ID 3 BECOZ ITS NOT EXIST IN CHILD TABLES SO INNDER JOIN ONLY USI ROWS KI DATA KO SHOW KRTA H JI PARENT TABLE ME H AND ALSO HERE IN CHILD TABLE SUCH AS ORDERS ME TABHI WAH SHOW KAREGA AND COMBINE KAREGA YAD RAKHNA HAMESHA 
+
+EXA. AGAR DO CIRCLE H EK DUSRE KO CROSS KR RHE H AND DONO KE BICH ME JO GAP H WAH INNER JOIN H AND SHOW KAREGA INNER JOIN 
+
+
+
+                                            INNER JOIN WITH GROUP BY 
+
+SELECT NAME FROM CUSTOMERS
+    -> INNER JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID
+    -> GROUP BY NAME;
++-------+
+| NAME  |
++-------+
+| ANUP  |
+| Yuvii |
++-------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT NAME ,SUM(AMOUNT) FROM CUSTOMERS
+    -> INNER JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID
+    -> GROUP BY NAME;
++-------+-------------+
+| NAME  | SUM(AMOUNT) |
++-------+-------------+
+| ANUP  |     1184.00 |
+| Yuvii |      343.33 |
++-------+-------------+  
+
+
+
+                                                                                             ✅ LEFT JOIN in MySQL
+
+
+RETURNS ALL ROWS FROM THE LEFT (OR FIRST) TABLE AND THE MATCHING ROWS FROM THE RIGHT (OR SECOND) TABLE 
+
+
+
+:highlight
+
+If there is no match → NULL is returned for right table columns.
+
+🔹 Example
+👇 customers (Left Table)
+customer_id	name
+  1	        Anup
+  2       	Rahul
+  3	        Amit
+
+👇 orders (Right Table)
+order_id     customer_id         	amount
+101      	1	                500
+102     	1               	700
+103     	2                	300
+
+🔹 Query
+SELECT c.name, o.amount
+FROM customers c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id;
+
+🔹 Result
+name	amount
+Anup	500
+Anup	700
+Rahul	300
+Amit	NULL
+
+👉 Amit appears even though he has no orders.
+That is the power of LEFT JOIN.
+
+  
+ SELECT * FROM CUSTOMERS
+    -> LEFT JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID;
++---------+--------+--------------------------+--------+------------+--------+---------+
+| cust_id | name   | email                    | ord_ID | date       | amount | cust_id |
++---------+--------+--------------------------+--------+------------+--------+---------+
+|       1 | ANUP   | anup94685@gmail.com      |      1 | 2026-02-26 | 500.34 |       1 |
+|       1 | ANUP   | anup94685@gmail.com      |      2 | 2026-02-26 | 340.33 |       1 |
+|       1 | ANUP   | anup94685@gmail.com      |      3 | 2026-02-26 | 343.33 |       1 |
+|       2 | Yuvii  | YUviisingh7762@gmail.com |      4 | 2026-02-26 | 343.33 |       2 |
+|       3 | SHAM   | SHAM@33GAMIL.COM         |   NULL | NULL       |   NULL |    NULL |
+|       4 | AMIT   | AMIT@33GAMIL.COM         |   NULL | NULL       |   NULL |    NULL |  YAHA PR NULL NULL SHOW KR RHA H BECOZ CHILD TABLE ME SHAM,AMIT,PRICE IN SAB KA CUST_ID NHI H SO 
+|       5 | PRINCE | prince@33GAMIL.COM       |   NULL | NULL       |   NULL |    NULL
+
+ERROR SHOW NHI KR RHA H USKE JAGAH PR NULL SHOW KR RHA  H 
+
+                                                                    LEFT JOIN USING GROUP BY 
+
+
+SELECT NAME ,SUM(AMOUNT) FROM CUSTOMERS
+    -> LEFT JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID
+    -> GROUP BY NAME;
++--------+-------------+
+| NAME   | SUM(AMOUNT) |
++--------+-------------+
+| ANUP   |     1184.00 |
+| Yuvii  |      343.33 |
+| SHAM   |        NULL |
+| AMIT   |        NULL |
+| PRINCE |        NULL |
++--------+-------------+
+
+
+SELECT NAME ,IFNULL(SUM(AMOUNT) ,0) FROM CUSTOMERS                     CONDITION YAHA PR NULL KE JAGAH PR O PUT KR DEGA AGAR NULL VALUES AAYE TO 
+    -> LEFT JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID
+    -> GROUP BY NAME;
++--------+------------------------+
+| NAME   | IFNULL(SUM(AMOUNT) ,0) |
++--------+------------------------+
+| ANUP   |                1184.00 |
+| Yuvii  |                 343.33 |
+| SHAM   |                   0.00 |
+| AMIT   |                   0.00 |
+| PRINCE |                   0.00 |
++--------+------------------------+
+
+SELECT NAME ,IF NULL(SUM(AMOUNT),0) AS TOTAL FROM CUSTOMERS  ERROR ISLIYE SHOW KR RHA H CONDITION YE HOGA IFNULL NAKI IF NULL SO SOMETIMES REMEMBER SYNTAX IN MYSQL 
+    -> LEFT JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID
+    -> GROUP BY NAME;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NULL(SUM(AMOUNT),0) AS TOTAL FROM CUSTOMERS
+LEFT JOIN ORDERS
+ON ORDERS.CUST_ID ' at line 1
+
+
+
+
+
+mysql> SELECT NAME ,IFNULL(SUM(AMOUNT),0) AS TOTAL FROM CUSTOMERS              AS TOTAL KO YAHA PR ALIASES KAHTE H ISKA USED KR KE KOI BHI NAME DE SAKTE H LIKE BELOW SEE  
+    -> LEFT JOIN ORDERS
+    -> ON ORDERS.CUST_ID = CUSTOMERS.CUST_ID
+    -> GROUP BY NAME;
++--------+---------+
+| NAME   | TOTAL   |
++--------+---------+
+| ANUP   | 1184.00 |
+| Yuvii  |  343.33 |
+| SHAM   |    0.00 |
+| AMIT   |    0.00 |
+| PRINCE |    0.00 |
++--------+---------+
+
+
+
+
+                                                                                         ✅ RIGHT JOIN in MySQL
+
+RETURNS ALL ROWS FROM THE RIGHT (OR SECOND) TABLE AND THE MATCHING ROWS FROM THE LEFT (OR FISRT ) TABLE.
+
+
+
+
+:highlight
+
+If there is no match → NULL in left table columns.
+
+🔹 Query
+SELECT c.name, o.amount
+FROM customers c
+RIGHT JOIN orders o
+ON c.customer_id = o.customer_id;
+🔹 Result
+
+If every order has a valid customer:
+
+name	amount
+Anup	500
+Anup	700
+Rahul	300
+
+If an order had customer_id not matching:
+
+Then name would be NULL.
+
+🔥 Visual Difference
+JOIN Type	What It Returns
+INNER   	Only matching rows
+LEFT    	All left + matching right
+RIGHT   	All right + matching left
+
+🎯 Easy Trick to Remember
+
+LEFT JOIN → Left table is important
+RIGHT JOIN → Right table is important
+
+🔥 Real-Life Use
+
+LEFT JOIN is used when:
+
+You want all customers
+
+Even those who didn’t place order
+
+Find customers without orders
+
+Example:
+
+SELECT c.name
+FROM customers c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+
+👉 Finds customers with no orders.
+
+🎯 Interview Question
+
+Q: Can RIGHT JOIN be replaced by LEFT JOIN?
+👉 Yes, by switching table positions.
+
+Q: Which JOIN is used more in real projects?
+👉 LEFT JOIN (more common than RIGHT JOIN)
+
+You are doing very well in MySQL 👏
+JOIN is one of the strongest interview topics.  
+
+
+                                                                     	ON DELETE CASCADE IN MYSQL 
+
+✅ ON DELETE CASCADE in MySQL
+
+:highlight
+
+It is used with FOREIGN KEY.
+
+🔹 Why Do We Need It?
+
+Suppose we have:
+
+customers (parent table)
+
+orders (child table)
+
+One customer → Many orders
+
+If we delete a customer, what should happen to their orders?
+
+👉 Without CASCADE → Error
+👉 With CASCADE → Orders deleted automatically
+
+🔥 Example Without CASCADE
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    FOREIGN KEY (customer_id)
+    REFERENCES customers(customer_id)
+);
+
+Now:
+
+DELETE FROM customers WHERE customer_id = 1;
+
+❌ ERROR
+Because orders exist for that customer.
+
+✅ Example With ON DELETE CASCADE
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    FOREIGN KEY (customer_id)
+    REFERENCES customers(customer_id)
+    ON DELETE CASCADE
+);
+
+Now:
+
+DELETE FROM customers WHERE customer_id = 1;
+
+✔ Customer deleted
+✔ All related orders automatically deleted
+
+🔥 Real Meaning
+
+Parent row deleted →
+All child rows connected to it are deleted automatically.
+
+🔹 Visual Example
+
+Before delete:
+
+Customers:
+
+1  Anup
+
+Orders:
+
+101  1  500
+102  1  700
+
+After:
+
+DELETE FROM customers WHERE customer_id = 1;
+
+Both tables become empty for that customer.
+
+🔥 Other Options (Important for Interview)
+
+Besides CASCADE, there are:
+
+Option	Meaning
+ON DELETE CASCADE	Delete child rows
+ON DELETE SET NULL	Set foreign key to NULL
+ON DELETE RESTRICT	Prevent deletion
+ON DELETE NO ACTION	Same as RESTRICT
+🎯 Interview Question
+
+Q: What is ON DELETE CASCADE?
+👉 It automatically deletes related child records when a parent record is deleted.
+
+Q: Is CASCADE dangerous?
+👉 Yes, if used carelessly, it can delete large amounts of data.
+
+🧠 When to Use It?
+
+Use CASCADE when:
+
+Child data has no meaning without parent
+Example: order items without order
+
+Avoid CASCADE when:
+
+Child data must be preserved
+Example: transaction history  
+
+SO AAP AYESE DELETE NHI KR SAKTE KOI BHI CHIZ PARENT TABLE OR YOU CAN SAY PARENT ROW SO U NEED TO APPLY ON DELETE CASCADE IN CHILD TABLE THEN YOU DELETE ANY THING LIKET THIS  
+
+
+ delete table customers            YAHA PR DELETE ISLIYE HUA KYUKI YE AAPNE FROM KE JAGAH TABLE LIKHA H DELETE FROM LAGATA H NAKI TABLE 
+    -> where name = 'sham';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table customers
+where name = 'sham'' at line 1
+mysql> delete from customers
+    -> where name = 'sham';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customers;
++---------+--------+--------------------------+
+| cust_id | name   | email                    |
++---------+--------+--------------------------+
+|       1 | ANUP   | anup94685@gmail.com      |
+|       2 | Yuvii  | YUviisingh7762@gmail.com |
+|       4 | AMIT   | AMIT@33GAMIL.COM         |
+|       5 | PRINCE | prince@33GAMIL.COM       |
++---------+--------+--------------------------+ 
+
+
+                                                  EXERCISE 08 
+
+1. CREATE TWO TABLE NAME AUTHORS AND BOOKS .
+
+ 
+AUTHORS  (PARENT TABLE)                                            BOOKS (CHILD TABLE)
+
+AUTHOR_ID                                                         BOOK_ID
+AUTHOR_NAME                                                       TITLE
+                                                                  RATINGS
+                                                                  AUTHOR_ID OR AU_ID 
+
+
+2.INSERT INTO AUTHORS (AUTHOR_NAME) VALUES ('ANUP'),('VISHAL'),('YUVII'),('MONU'),('ARYAN'),('MISHARA');
+
+
+2. ANS: 
+
+mysql> SELECT * FROM AUTHORS;
++-----------+-------------+
+| AUTHOR_ID | AUTHOR_NAME |
++-----------+-------------+
+|         1 | ANUP        |
+|         2 | YUVII       |
+|         3 | VISHAL      |
+|         4 | MONU        |
+|         5 | ARYAN       |
+|         6 | MISHRA      |
++-----------+-------------+
+
+
+
+
+
+
+3. INSERT INTO BOOKS (TITLE,RATINGS,AUTHOR_ID) VALUES ('YUVII - THE GREAT MAN',5,1),('THE STORY OF ANUP',5,1),('ANUP BECOMING DATA ANALYST',5,1)('GRADUALLY I BECOMING DATA ANLYST',4,3) ,('MONU THE KING',1,2),('ANUP - THE SUPERMAN',3,4),('MONU-THE DANGEROUS'2,1);
+
+
+ANS : 
+
+ SELECT * FROM BOOKS;
++---------+--------------------------------------+---------+-----------+
+| BOOK_ID | TITLE                                | RATINGS | AUTHOR_ID |
++---------+--------------------------------------+---------+-----------+
+|       1 | YUVII - THE GREAT MANJ               |       5 |         1 |
+|       2 | THE STORY OF ANUP                    |       5 |         1 |
+|       3 | ANUP BECOMING DATA ANALYST VERY SOON |       5 |         1 |
+|       4 | GRADUALLY I BECOMING DATA ANALYST    |       4 |         3 |
+|       5 | MONU THE KING                        |       1 |         2 |
+|       6 | ANUP - THE SUPERMAN                  |       3 |         4 |
+|       7 | MONU - THE DANGEROUS                 |       2 |         1 |
++---------+--------------------------------------+---------+-----------+
+
+
+
+
+
+NOTE AAP AUTHOR_ID KE JAGAH PR AU_ID BHI LIKH SAKTE HO LIKE THIS 
+
+
+3. AAPKO AUTHOR_NAME ,TITLE AND RATINGS BAS TINO PRINT KARANA H AGAR JISKA ID MENTION NHI H AUTHORS_ID USED NHI HUYA H USKA NAME NHI DIKHNA CHAHIYE .
+
+ANS     ;
+
+
+   SELECT AUTHOR_NAME,TITLE,RATINGS FROM AUTHORS
+    -> INNER JOIN BOOKS
+    -> ON BOOKS.AUTHOR_ID = AUTHORS.AUTHOR_ID;
++-------------+--------------------------------------+---------+
+| AUTHOR_NAME | TITLE                                | RATINGS |
++-------------+--------------------------------------+---------+
+| ANUP        | YUVII - THE GREAT MANJ               |       5 |
+| ANUP        | THE STORY OF ANUP                    |       5 |
+| ANUP        | ANUP BECOMING DATA ANALYST VERY SOON |       5 |
+| VISHAL      | GRADUALLY I BECOMING DATA ANALYST    |       4 |
+| YUVII       | MONU THE KING                        |       1 |
+| MONU        | ANUP - THE SUPERMAN                  |       3 |
+| ANUP        | MONU - THE DANGEROUS                 |       2 |
++-------------+--------------------------------------+---------+
+
+
+
+
+
+
+4 AAPKO AUTHOR_NAME ,TITLE AND RATINGS BAS TINO PRINT KARANA H AGAR JISKA ID MENTION NHI H AUTHORS_ID USED NHI HUYA H USKA TITLE AND RAINGS NULL SHOW KARNA CHAIYE 
+
+
+ANS  : 
+
+
+mysql> SELECT * FROM AUTHORS
+    -> LEFT JOIN BOOKS
+    -> ON BOOKS.AUTHOR_ID = AUTHORS.AUTHOR_ID;
++-----------+-------------+---------+--------------------------------------+---------+-----------+
+| AUTHOR_ID | AUTHOR_NAME | BOOK_ID | TITLE                                | RATINGS | AUTHOR_ID |
++-----------+-------------+---------+--------------------------------------+---------+-----------+
+|         1 | ANUP        |       7 | MONU - THE DANGEROUS                 |       2 |         1 |
+|         1 | ANUP        |       3 | ANUP BECOMING DATA ANALYST VERY SOON |       5 |         1 |
+|         1 | ANUP        |       2 | THE STORY OF ANUP                    |       5 |         1 |
+|         1 | ANUP        |       1 | YUVII - THE GREAT MANJ               |       5 |         1 |
+|         2 | YUVII       |       5 | MONU THE KING                        |       1 |         2 |
+|         3 | VISHAL      |       4 | GRADUALLY I BECOMING DATA ANALYST    |       4 |         3 |
+|         4 | MONU        |       6 | ANUP - THE SUPERMAN                  |       3 |         4 |
+|         5 | ARYAN       |    NULL | NULL                                 |    NULL |      NULL |
+|         6 | MISHRA      |    NULL | NULL                                 |    NULL |      NULL |
++-----------+-------------+---------+--------------------------------------+
+
+
+
+
+
+
+5.AAPKO AUTHOR_NAME ,TITLE AND RATINGS BAS TINO PRINT KARANA H AGAR JISKA ID MENTION NHI H AUTHORS_ID USED NHI HUYA H USKA TITLE KE JAGAH PR NOT FOUND AND RATINS ME 0 SHOW KRNA CHAIYE 
+
+ANS :
+
+ SELECT AUTHOR_NAME ,IFNULL(TITLE,'NOTFOUND') AS TITLE,IFNULL(RATINGS,0) AS RATINGS FROM AUTHORS
+    -> LEFT JOIN BOOKS
+    -> ON BOOKS.AUTHOR_ID = AUTHORS.AUTHOR_ID;
++-------------+--------------------------------------+---------+
+| AUTHOR_NAME | TITLE                                | RATINGS |
++-------------+--------------------------------------+---------+
+| ANUP        | MONU - THE DANGEROUS                 |       2 |
+| ANUP        | ANUP BECOMING DATA ANALYST VERY SOON |       5 |
+| ANUP        | THE STORY OF ANUP                    |       5 |
+| ANUP        | YUVII - THE GREAT MANJ               |       5 |
+| YUVII       | MONU THE KING                        |       1 |
+| VISHAL      | GRADUALLY I BECOMING DATA ANALYST    |       4 |
+| MONU        | ANUP - THE SUPERMAN                  |       3 |
+| ARYAN       | NOTFOUND                             |       0 |
+| MISHRA      | NOTFOUND                             |       0 |
++-------------+--------------------------------------+---------+
+
+
+
+OR GROUP BY USED 
+
+
+ 
+mysql> SELECT AUTHOR_NAME,
+    ->        IFNULL(MAX(TITLE), 'NOT FOUND') AS TITLE,
+    ->        IFNULL(MAX(RATINGS), 0) AS RATINGS
+    -> FROM AUTHORS
+    -> LEFT JOIN BOOKS
+    -> ON BOOKS.AUTHOR_ID = AUTHORS.AUTHOR_ID
+    -> GROUP BY AUTHOR_NAME;
++-------------+-----------------------------------+---------+
+| AUTHOR_NAME | TITLE                             | RATINGS |
++-------------+-----------------------------------+---------+
+| ANUP        | YUVII - THE GREAT MANJ            |       5 |
+| YUVII       | MONU THE KING                     |       1 |
+| VISHAL      | GRADUALLY I BECOMING DATA ANALYST |       4 |
+| MONU        | ANUP - THE SUPERMAN               |       3 |
+| ARYAN       | NOT FOUND                         |       0 |
+| MISHRA      | NOT FOUND                         |       0 |
++-------------+-----------------------------------+---------+ 
+
+OR 
+
+
+SELECT AUTHOR_NAME,IFNULL(TITLE,'NOT FOUND'),IFNULL(RATINGS,0) FROM AUTHORS
+    -> LEFT JOIN BOOKS
+    -> ON BOOKS.AUTHOR_ID = AUTHORS.AUTHOR_ID;
++-------------+--------------------------------------+-------------------+
+| AUTHOR_NAME | IFNULL(TITLE,'NOT FOUND')            | IFNULL(RATINGS,0) |
++-------------+--------------------------------------+-------------------+
+| ANUP        | MONU - THE DANGEROUS                 |                 2 |
+| ANUP        | ANUP BECOMING DATA ANALYST VERY SOON |                 5 |
+| ANUP        | THE STORY OF ANUP                    |                 5 |
+| ANUP        | YUVII - THE GREAT MANJ               |                 5 |
+| YUVII       | MONU THE KING                        |                 1 |
+| VISHAL      | GRADUALLY I BECOMING DATA ANALYST    |                 4 |
+| MONU        | ANUP - THE SUPERMAN                  |                 3 |
+| ARYAN       | NOT FOUND                            |                 0 |
+| MISHRA      | NOT FOUND                            |                 0 |
++-------------+--------------------------------------+-------------------+
+
+
+
+
+
+
+
+
+
+
+
+6. AAPKO AUTHOR NAME ,RAING  EK NAYA COLUMN NAME 'REMARK ' NAME SE BANANA H AND AGAR 3 YA 3 SE KAM RATINGS H TO AVERAGE YA LOW PRINT KARE AND USASE UPPER GOOD PRINT KARE  
+
+ANS : 
+
+
+SELECT AUTHOR_NAME,TITLE,RATINGS,
+    -> CASE
+    -> WHEN RATINGS <=3 THEN 'AVERAGE'
+    -> WHEN RATINGS = 3 THEN 'GOOD'
+    -> WHEN RATINGS = 3 THEN 'AWESOME'
+    -> ELSE 'NOT RATINGS'
+    -> END AS RATINGS FROM AUTHORS
+    -> LEFT JOIN BOOKS
+    -> ON BOOKS.AUTHOR_ID = AUTHORS.AUTHOR_iD;
++-------------+--------------------------------------+---------+-------------+
+| AUTHOR_NAME | TITLE                                | RATINGS | RATINGS     |
++-------------+--------------------------------------+---------+-------------+
+| ANUP        | MONU - THE DANGEROUS                 |       2 | AVERAGE     |
+| ANUP        | ANUP BECOMING DATA ANALYST VERY SOON |       5 | NOT RATINGS |
+| ANUP        | THE STORY OF ANUP                    |       5 | NOT RATINGS |
+| ANUP        | YUVII - THE GREAT MANJ               |       5 | NOT RATINGS |
+| YUVII       | MONU THE KING                        |       1 | AVERAGE     |
+| VISHAL      | GRADUALLY I BECOMING DATA ANALYST    |       4 | NOT RATINGS |
+| MONU        | ANUP - THE SUPERMAN                  |       3 | AVERAGE     |
+| ARYAN       | NULL                                 |    NULL | NOT RATINGS |
+| MISHRA      | NULL                                 |    NULL | NOT RATINGS |
++-------------+--------------------------------------+---------+-------------+
+9 rows in set (0.00 sec)
+
+NOTE : ISME NULL SHOW KR RHA H BECOZ LEFT JOIN USED HUA H ISLIYE AND AGAR NULL NHI CHAIYE TO INNER JOIN USED HOTA H LIKE THIS 
+
+
+SELECT AUTHOR_NAME,TITLE,RATINGS,
+    -> CASE
+    -> WHEN IFNULL(RATINGS,0) <=3 THEN 'GOOD'
+    -> ELSE 'AVERAGE'
+    -> END AS REMARK
+    -> FROM AUTHORS
+    -> INNER JOIN BOOKS
+    -> ON BOOKS.AUTHOR_ID = AUTHORS.AUTHOR_ID;
++-------------+--------------------------------------+---------+---------+
+| AUTHOR_NAME | TITLE                                | RATINGS | REMARK  |
++-------------+--------------------------------------+---------+---------+
+| ANUP        | YUVII - THE GREAT MANJ               |       5 | AVERAGE |
+| ANUP        | THE STORY OF ANUP                    |       5 | AVERAGE |
+| ANUP        | ANUP BECOMING DATA ANALYST VERY SOON |       5 | AVERAGE |
+| VISHAL      | GRADUALLY I BECOMING DATA ANALYST    |       4 | AVERAGE |
+| YUVII       | MONU THE KING                        |       1 | GOOD    |
+| MONU        | ANUP - THE SUPERMAN                  |       3 | GOOD    |
+| ANUP        | MONU - THE DANGEROUS                 |       2 | GOOD    |
++-------------+--------------------------------------+---------+---------+
+
+
+                             ✅ Many-to-Many Relationship in MySQL
+
+:highlight
+
+You cannot implement it directly with just two tables.
+You must create a third table (junction table).
+
+🔥 Real Example: Students and Courses
+
+One student → can enroll in many courses
+
+One course → can have many students
+
+That is Many-to-Many.
+
+✅ Step 1: Create Main Tables
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50)
+);
+✅ Step 2: Create Junction Table
+CREATE TABLE student_course (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+🔥 Why PRIMARY KEY (student_id, course_id)?
+
+This prevents duplicate entries like:
+
+1  101
+1  101   ❌ duplicate
+
+Composite primary key ensures uniqueness.
+
+🔹 Example Data
+Students
+student_id	name
+1	Anup
+2	Rahul
+Courses
+course_id	course_name
+101	SQL
+102	Java
+student_course
+student_id	course_id
+1	101
+1	102
+2	101
+
+Meaning:
+
+Anup studies SQL and Java
+
+Rahul studies SQL
+
+🔥 How To Fetch Data (JOIN)
+SELECT s.name, c.course_name
+FROM student_course sc
+JOIN students s ON sc.student_id = s.student_id
+JOIN courses c ON sc.course_id = c.course_id;
+🔥 Real-Life Examples
+Example	Table A	Table B
+Students & Courses	students	courses
+Products & Orders	products	orders
+Actors & Movies	actors	movies
+Users & Roles	users	roles
+🎯 Interview Question
+
+Q: Can we implement Many-to-Many without third table?
+👉 No.
+
+Q: Why use composite primary key in junction table?
+👉 To prevent duplicate relationships.
+
+🧠 Simple Formula
+
+Many-to-Many =
+Two One-to-Many relationships via a junction table.
+
+
+THEY NEED ATLEAST 3 TABLES :  
+
+
+
+
+
+
+create table students (                             FIRST TABLE 1
+    -> id int primary key auto_increment ,
+    -> student_name varchar(50) );
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> create table courses (                      SECOND TABLE 2
+    -> id int primary key auto_increment ,
+    -> fees int ,
+    -> course_name varchar(50) );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table student_course (              THIRD TABLE 3
+    -> student_id int ,
+    -> course_id int ,
+    -> foreign key (student_Id) references students(id),
+    -> foreign key (course_id) references courses(id) );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_institute |
++---------------------+
+| courses             |
+| student_course      |
+| students            |
++---------------------+
+3 rows in set (0.01 sec)
+
+mysql> insert into students (student_name) values ('ANUP'),('YUVII'),('MONU'),('VISHAL'),('ANKUSH');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into COURSES (ID,COURSE_NAME,FEES) values (101,'SS',3000)('BD',5000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('BD',5000)' at line 1
+
+
+
+mysql> insert into COURSES (ID,COURSE_NAME,FEES) values (101,'SS',3000);  YADI AAP CHAHTE HO DATA 101 SE START HO THEN WRITE LIKE THIS ABOVE AND THEN INSERT THE VALUES 
+
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into COURSES (COURSE_NAME,FEES) values ('BD',5000),('JAVA',2000),('PYTHON',1000),('C++',5000);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENTS;
++----+--------------+
+| id | student_name |
++----+--------------+
+|  1 | ANUP         |
+|  2 | YUVII        |
+|  3 | MONU         |
+|  4 | VISHAL       |
+|  5 | ANKUSH       |
++----+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COURSES;
++-----+------+-------------+
+| id  | fees | course_name |
++-----+------+-------------+
+| 101 | 3000 | SS          |
+| 102 | 5000 | BD          |
+| 103 | 2000 | JAVA        |
+| 104 | 1000 | PYTHON      |
+| 105 | 5000 | C++         |
++-----+------+-------------+
+5 rows in set (0.03 sec)
+
+mysql> insert into STUDENT_COURSE (STUDENT_ID,COURSE_ID) VALUES (3,101),(2,103),(5,105),(1,104),(3,102);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT_COURSE;
++------------+-----------+
+| student_id | course_id |
++------------+-----------+
+|          1 |       101 |
+|          3 |       101 |
+|          2 |       103 |
+|          5 |       105 |
+|          1 |       104 |
+|          3 |       102 |
++------------+-----------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Yes — JOIN is absolutely required in Many-to-Many relationships.
+
+Because in Many-to-Many, data is stored in three tables.
+
+Let’s understand properly.
+
+✅ Structure of Many-to-Many
+
+Example: Students and Courses
+
+We have:
+
+1️⃣ students
+2️⃣ courses
+3️⃣ student_course (junction table)
+
+🔹 Tables
+students
+student_id	name
+1	Anup
+2	Rahul
+courses
+course_id	course_name
+101	SQL
+102	Java
+student_course
+student_id	course_id
+1	101
+1	102
+2	101
+🔥 Why JOIN Is Needed?
+
+Because:
+
+student_course only stores IDs
+
+Real information is in students and courses
+
+So we JOIN all three tables.
+
+✅ Basic JOIN for Many-to-Many
+SELECT s.name, c.course_name
+FROM student_course sc
+JOIN students s 
+    ON sc.student_id = s.student_id
+JOIN courses c 
+    ON sc.course_id = c.course_id;
+🔥 How It Works
+
+Step 1:
+student_course joins with students
+→ get student names
+
+Step 2:
+student_course joins with courses
+→ get course names
+
+🔥 Output
+name	course_name
+Anup	SQL
+Anup	Java
+Rahul	SQL
+🎯 Important Concept
+
+Many-to-Many =
+Two INNER JOIN operations
+
+Because:
+
+student_course connects both tables.
+
+🔥 Example 2: Show Courses of Student "Anup"
+SELECT c.course_name
+FROM student_course sc
+JOIN students s ON sc.student_id = s.student_id
+JOIN courses c ON sc.course_id = c.course_id
+WHERE s.name = 'Anup';
+🔥 Example 3: Count Courses per Student
+SELECT s.name, COUNT(sc.course_id) AS total_courses
+FROM students s
+LEFT JOIN student_course sc 
+    ON s.student_id = sc.student_id
+GROUP BY s.name;
+🎯 Interview-Level Answer
+
+If interviewer asks:
+
+How do you fetch data in Many-to-Many relationship?
+
+You answer:
+
+We use JOIN between the two main tables and the junction table to retrieve related records. 
+
+
+join with many to many relationship 
+
+select student_name,course_name from students
+    -> join student_course
+    -> on student_course.student_id = students.id
+    -> join courses
+    -> on student_course.course_id = courses.id
+    -> ;
++--------------+-------------+
+| student_name | course_name |
++--------------+-------------+
+| ANUP         | SS          |
+| ANUP         | PYTHON      |
+| YUVII        | JAVA        |
+| MONU         | SS          |
+| MONU         | BD          |
+| ANKUSH       | C++         |
++--------------+-------------+  
+
+
+                           EXERCISE -09 
+1. PRINT NO. OF STUDENTS FOR EACH COURSE. 
+
++-------------+---------------------+
+| course_name | (student_name) |
++-------------+---------------------+
+| SS          |                   2 |
+| PYTHON      |                   1 |
+| JAVA        |                   1 |
+| BD          |                   1 |
+| C++         |                   1 |
++-------------+---------------------+
+
+ANS : 
+
+select course_name , count(student_name) from students
+    -> join student_course
+    -> on student_course.student_id = students.id
+    -> join courses
+    -> on student_course.course_id = courses.id
+    -> group by course_name;
++-------------+---------------------+
+| course_name | count(student_name) |
++-------------+---------------------+
+| SS          |                   2 |
+| PYTHON      |                   1 |
+| JAVA        |                   1 |
+| BD          |                   1 |
+| C++         |                   1 |
++-------------+---------------------+  
+
+2. PRINT NO. OF COURSES TAKEN BY EACH STUDENTS 
+
++--------------+---------------------+
+| student_name | (student_name) |
++--------------+---------------------+
+| ANUP         |                   2 |
+| YUVII        |                   1 |
+| MONU         |                   2 |
+| ANKUSH       |                   1 |
++--------------+---------------------+  
+
+
+ANS :  select student_name,count(student_name) from students
+    -> join student_course
+    -> on student_course.student_id = students.id
+    -> join courses
+    -> on student_course.course_id = courses.id
+    -> group by student_name;
++--------------+---------------------+
+| student_name | count(student_name) |
++--------------+---------------------+
+| ANUP         |                   2 |
+| YUVII        |                   1 |
+| MONU         |                   2 |
+| ANKUSH       |                   1 | 
++--------------+---------------------+  
+
+3. TOTAL FEES PAID BY EACH STUDENT 
+
+--------------+-----------+
+| student_name | (fees) |
++--------------+-----------+
+| ANUP         |      4000 |
+| YUVII        |      2000 |
+| MONU         |      8000 |
+| ANKUSH       |      5000 |
++--------------+-----------+ 
+
+ANS : select student_name,sum(fees) from students
+    -> join student_course
+    -> on student_course.student_id = students.id
+    -> join courses
+    -> on student_course.course_id = courses.id
+    -> group by student_name;
++--------------+-----------+
+| student_name | sum(fees) |
++--------------+-----------+
+| ANUP         |      4000 |
+| YUVII        |      2000 |
+| MONU         |      8000 |
+| ANKUSH       |      5000 |
++--------------+-----------+ 
+
+                                       VIEW IN MYSQL : 
+
+✅ VIEW in MySQL
+
+:highlight
+
+It does NOT store data physically.
+It stores only the SQL query.
+
+🔹 Simple Meaning
+
+View = Saved SELECT statement
+
+Whenever you query the view →
+MySQL runs the stored SELECT query.
+
+🔥 Why Use VIEW?
+
+✔ Simplify complex queries
+✔ Hide sensitive columns
+✔ Improve security
+✔ Reuse logic
+✔ Cleaner reporting
+
+✅ Basic Syntax
+CREATE VIEW view_name AS
+SELECT column1, column2
+FROM table_name
+WHERE condition;
+
+🔥 Example 1: Simple View
+
+Suppose you have:
+
+students table
+student_id	name	marks
+1       	Anup	85
+2       	Rahul	60
+Create View
+
+CREATE VIEW high_marks AS
+SELECT name, marks
+FROM students
+WHERE marks > 70;
+
+Use View
+SELECT * FROM high_marks;
+
+Output:
+
+name	marks
+Anup	85
+
+🔥 Example 2: View with JOIN (Very Common)
+CREATE VIEW student_courses_view AS
+SELECT s.name, c.course_name
+FROM student_course sc
+JOIN students s ON sc.student_id = s.student_id
+JOIN courses c ON sc.course_id = c.course_id;
+
+Now:
+
+SELECT * FROM student_courses_view;
+
+No need to write JOIN again.
+
+🔥 Important Points
+
+1️⃣ View does NOT store data
+2️⃣ If base table changes → View result changes
+3️⃣ You can use WHERE, GROUP BY, JOIN inside view
+4️⃣ Views can be used like normal tables
+
+🔹 Drop View               aapka jo bhi view bana h wah delete ho jayega 
+DROP VIEW view_name;
+
+🔹 Update View
+CREATE OR REPLACE VIEW view_name AS
+SELECT ...;
+
+🔥 Interview Questions
+
+Q: Does view store data physically?
+👉 No.
+
+Q: Can we insert data into a view?
+👉 Yes, but only if it is a simple view (no GROUP BY, no JOIN usually).
+
+Q: Why use view?
+👉 Security + Simplification.
+
+🧠 Real-Life Use in Companies
+
+Hide salary column
+
+Create reporting views
+
+Create dashboard queries
+
+API data abstraction
+
+MYSQL SUPPORTS VIEWS,INCLUDING UPDATABLE VIEWS.VIEWS ARE STORED QUERIES WHEN INVOKED PRODUCE A RESULT SET. A VIEW ACTS AS A VIRTUAL TABLE
+
+
+
+
+
+aap aliasing kaise bhi kr sakte ho iska mtlb aap bina as likhe aap only dot ka used kr ke aliash kr sakte ho like this 
+
+
+SELECT du.unique_id, d.name
+FROM Employees d
+LEFT JOIN EmployeeUNI du 
+ON d.id = du.id;
+🧠 Step-by-Step Explanation
+1️⃣ Employees d
+
+👉 This means:
+
+Employees = table name
+d = alias (short name)
+
+💡 So:
+
+Employees d  =  Employees AS d
+
+Now instead of writing Employees.name, you can write:
+
+d.name
+2️⃣ EmployeeUNI du
+
+👉 Same concept:
+
+EmployeeUNI = table name
+du = alias
+
+So:
+
+EmployeeUNI du = EmployeeUNI AS du
+
+Now you can write:
+
+du.unique_id
+🔥 Why we use alias (d, du)?
+
+👉 To make query:
+
+Shorter ✅
+Cleaner ✅
+Easy to read ✅
+3️⃣ SELECT du.unique_id, d.name
+
+👉 You are selecting:
+
+du.unique_id → from EmployeeUNI table
+d.name → from Employees table
+4️⃣ LEFT JOIN
+
+👉 This is very important:
+
+LEFT JOIN means:
+
+Take ALL data from LEFT table (Employees)
+Match data from RIGHT table (EmployeeUNI)
+
+5️⃣ ON d.id = du.id
+
+👉 This is the condition:
+
+Match rows where:
+
+Employees.id = EmployeeUNI.id
+🎯 Simple Visualization
+Employees table
+id	name
+1	Alice
+2	Bob
+3	John
+EmployeeUNI table
+id	unique_id
+1	101
+2	102
+After LEFT JOIN:
+unique_id	name
+101	Alice
+102	Bob
+NULL	John
+
+👉 John has no match → so NULL
+
+🔥 Final Meaning of Query
+
+👉 “Show all employees and their unique_id (if available)”
+
+💡 In One Line (Interview Answer)
+
+du and d are aliases (short names) used for tables to make the query shorter and readable 
+ 

@@ -1,0 +1,395 @@
+                                               MS- EXCEL NOTES 
+
+YAD RAKHNA MS-WORD KE FILE KO DOCUMENTS YA DOCX BOLTE HAI  WAISE HI 
+EXCEL KE FILE KO  = WORKBOOK BOLTE H 
+ 
+HOME SHELL A1 KO BOLTE H BECOZ YE KHUD SE SELECT HOTI H 
+JIS SHELL ME KAM KAR RHE H USKO ACTIVE SHELL BOLTE H     
+CNTRL + LEFT ARROW YA RIGHT ARROW SE AKHIRI TK JA PAOIGE 
+shift + tab se left move karoge and sirf tab se right move karoge 
+koi bhi rows and column se se kuchh add krna h to us column me double click ya f2 press karunga 
+
+aapka icon ko dekhna h ya badhana h to upper le jakar double click kr do to khud se adjust ho jayega ya usko left pakad kr scroll kr do khud se ho jayega  
+
+agar aapko srno serial no 1 se 2,3,4 ayese likhna h to pahle 1 likh kr fir uske niche 2 likh kar and then dono ko select kr ke niche karoge to excel khud se hi count karega like 1,2,3,4like this 
+
+jaruri nhi h ki aap kewal 1 hi do agar table chaiye 3 ki to 3 fir niche 6 so excel samjh jayega ki 3 me aur 3 ko add krna h so  aapko 3 ko jitna tk print karwaoge utna tk kr dega 
+
+cut ko kewal ek bar hi used kr sakte ho rather than copy ko multiple time used kr sakte ho 
+
+agar 8/2/2026   ye date ho to aap just iske niche scroll karoge to automatic date one wise one select hogi aur khud se likh degi like this 9/2/2026,10/2/2026 like this 
+
+
+pahli baat workbook and worksheet me difference kya h 
+
+workbook means same like a book and whole and entire set of data jaha aap work kr rhe ho un pura ko workbook bolenge 
+worksheet : means same like one page and there are multiple pages or sheet in ms excel and ye different different ho sakte h but workbook nhi 
+
+upper jitney dikh rhe h like : home,insert,draw,page layout,data,review and view formulas like this in sab ko tab bolte h 
+and  in tab ke ander jitni bhi chize dikh rhi h unhe ribbons bolte h like home tab me jitney bhi chize like  bold,margin,color,copy,cut,paste so many thing in sab ko ribbons or ribbon bolte h  
+
+aur in ribbon ke bich me ek verticle line h siddha aur khada line h uss line me aur uske ander jitne ribbons h un sabko group bolte h  like copy,paste,cut,farmer pointer like this ye ek group h ,bold,italic,underline,color ye sab ek alag group h 
+
+home tab me jo different text h use menu ya further borad bolte h like mene apple likha h uske different different letter me likhna different text me likhana usko menu bolte h 
+
+
+quick access toolbar : hm uske bolte h jiske easily quick or serch kr ke easly dekh sakte h like autosave,undo,redo,search book ka name book1 excel like this in sab ko quick access toolbar bolenge like this i mean upper jitna dikh rha h aapko in sab ko wah bolenge 
+
+column : vertical jo line hoti h use bolte h column jo khada line hoti h use bolte h column 
+rows : horizontal line ho hoti h use bolte h rows sutal line ya sutake ke line jo hoti h                   _______
+cells : vertical line and horizontal line ko milakar jo banta h use bolte h cells like ek daba like this   |______|
+
+columns : ko alphabets name diye gye h A,B,C,D 
+rows ko numeric name diye gye h like 1,2,3,4,
+
+CELLS KO BOTH MEANS ALPHABET AND NUMERIC DONO NAME DIYE GYE H LIKE E7 ,C3 AAP JO BHI CELLS PR KAM KR RHE H UN SABKA ALAG ALAG NAME HOGA
+   i mean yah chalu hota h pahle column like A,B ,C and then rows like 1,2,3,4 
+
+
+aap mergin ya merge and center ka used mt krna kyuki isase excel ka flow chart kharab ho jata h like aap acche se nhi kr paoge uske jagah pr aap center across selection ka used krna jisase aapka excel ka flow chart bhi nhi bigdega uske liye aap merge and center ke niche corner me ek Chhota h button h use press kr ke and horizonal me check krna waha aapko [center across selection ] mil jayega usa jyada se jyada used krna 
+
+
+naya row ya column create krne ke liye  : jis bhi row ya column ke bich ek naya row ya column chahiye to uske bad wale column ya row ko select karente then press [control + shift + (+)]   to ek naya rows column create hoga aur [control + (-) ]press karenge to delete hoga
+
+iske jaga h aap numeric keyword ka + aur control press karenge tabhi ek naya row aur control + (-) press karenge to delete hoga 
+
+
+
+
+puri row column single row like this in sabko select krne ke liye just control + shift + right arrow press karenge to right wala sara data select hoga agar left arrow so left wala below arrow then below wala only press CONTROL  + arrow so aapka cursor last me chala jayega like this 	isi ko INTELIGENT NAVIGATION  bole h shift basically select krne ke liye hota h 
+
+ek aur methos h just press control + A so aapka pura data select ho jayega remember: agar aap apne data ke bahar jakar sheet me control + A press kregnge to pura data ko select kr lega aur apne data me kisi par jakar press karenge control + A then aapka only data select hoga 
+
+ya aap apne data pr jakar press karenge only congtrol+A then only aapka pura data and again press same thing then select whole the data 
+
+cell referenceing means : dusre cells me arithmetic operation lagakar us cells ka name me + - karna ko cells refenrececing kahte h like this = 3+5 = 8 hoga but 
+
+aap 3 ke cells ko aur 5 ke cells ke cells ko add kr denge = lagakar to usko cells referencing kahte h aur isme aap jitni bar input change karenge utni bar output diffenct and correct answer aayega like this E5+D9 = 8
+
+
+CELLS REFERENCING THREE TYPES KE HOTE H  
+
+1. RELATIVE SERIES WISE CHALTE H LIKE SUN MONDAY TUES LIKE THIS FIR usko jaise jaise scroll karoge ISKA MLTLB AAP APNE DATA ME KOI FOUMULA USED KIYE DO COLUMN KO ADD KIYE TO WAISE WAISE WORK KAREGA BUT AAP US FORMULA KO KAHI COPY KR KE AUR KAHI PASTE KIYE TO WAH APNE SAMNE WALA COLUMN KO DEKH KR KAM KAREGA 
+
+2. ABSOLUTE  ISME $ DOLLER KA SIGN LAGAKAR APNE ROWS AND COLUMN DONO KO LOCK KARTE H like this $E$4 ISME DONO KO LOCK KARNA PADTA H 
+
+ISKO AAP KITNI BAR BHI COPY KR LO YA KAHI PASTE KARO CHANGE NHI HOGA 
+
+3. MIXED  ISME $ DOLLER KA SIGN LAGAKAR APNE ONLY ROWS YA ONLY COLUMN DONO MESE KOI EK  KO ROK SAKTE H LIKE THIS $E5 AYESE YA E$5 DONO MESE KOI EK YA TO ROWS YA TO COLUMN 
+
+
+
+
+
+
+
+
+                                 SECTION -02 EXCEL -BASED WRANGLING 
+
+first of all if you have duplicate values and u want to remove it then there is a method and function u just used it and your values and your data whatever data you have just remove it and function name is remove duplicate like this 
+
+
+aapko sabse pahle data me jana padega waha pr remove duplicate kr ke ek tools h uska used karoge apne data ko select kr ke to waha sara remove kr dega duplicate ko 
+
+
+TRIM : BASICALLY USED HOTA H AAPKE DATA ME KOI SPACE H YA DATA THIK KE SHOW NHI KR RHA H THEN AAP TRIM FUNCTION KA USED KR KE USKO PROPER THIK KR SAKTE HO AND SPACE REMOVE KR SAKTE HO 
+
+LIKE =TRIM(A1) USKE BAD ENTER KAROGE TO AAPKA DATA ACCHE SE KAM KARNE LAGEGA  FIRSTLY AAP 
+= KA USED KARNA USKE BAD TRIM LIKH KR THEN BRACKET (E3) AND CLOSED IT YE KAM KAREGA 
+
+ 
+CASE TRANFORMATIONS : UPPER ,LOWER AND PROPER 
+UPPER MEANS : A,B,C,D LIKE THIS 
+LOWER MEANS : a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z like this 
+PROPER MEANS : KISI KA FIRST LETTER CAPITAL AND BAKI SAB LOWER ME LIKE THIS 
+                Anup Kumar Singh  Apple LIKE THIS TYPES OF LETTER KO PROPER LETTER BOLTE 
+
+ISKO USED KRNE KE LIYE JUST =PROPER(E2) TO SALA E2 KA DATA PRPER ME HO JAYEGA AND =UPPER(G3) TO SARA UPPER ME HO JAYEGA MTLB (=) KE BAD KOI BHI FORMULA KA USED KR KE KAM KAR SAKTE H LIKE THIS  
+
+DATA EXTRACTION TECHNIQUES : LEFT, RIGHT ,MID,LEN 
+IT MEANS AAP APNE DATA ME SE KITNE LETTER CHAIYE USKE DEKHNE KE LIYE DATA EXTRACTION KA USED KR SAKTE H 
+
+LIKE THIS : anup@gmail.com 	 AGAR RIGHT SE SIRF gmail.com chaiye to used karenge like this =RIGHT(E1,9) TO AAPKA OUTPUT ME gmail.com aa jayega 
+
+apko koi bhi operation perform karne ke liye (=) ka sign used krne ke bad likhenge 
+left ke liye   : ANUP  SIF ANU CHAIYE THEN { =LEFT(G1,3)  TO AAPKO ANU MIL JAYEGA AAPKO ROWS KO SELECT KARENGE AND THEN USME SE KITNA DATA CHAIYE 3 YA JITNA CHAIYE UTNA LIKH DENGE }
+
+
+MID KE LIYE : anup@gmail.com h isme se mid chaiye the {=mid(G1,5,10) @gamil aapko print ho jayega isme kaha se kaha tk jana h wah mention karna padega }
+
+
+len aapko length batata h 
+
+COMBINING DATA WITH  "&" , CONCAT,TEXTJOIN  YE SARA DATA KO COMBINE KARNE KE LIYE HOTA 
+
+& ISKA USED COMBINE KARNE KE LIYE HOTA : LIKE ANUP AND SINGH H SO  AAP ADD KRNA CHATE HO THEN   { =(US COLUMN KA NAME) G1 & (DUSRE COLUMN KA NAME) OUTPUT ME ANUP SINGH}
+
+CONCAT : {=CONCAT(G1,G2) TO OUTPUT ME ANUP SINGH AA JAYEGA }
+
+TEXTJOIN : {=TEXTJOIN("-",FALSE,G1,G2) OUTPUT ME ANUP - SINGH AAYEGA } YE IGNORE NHI KRTA H ISKA MTLB ANUP YA SINGH DELETE HO JAYE TO IGNORE NHI KAREGA -SINGH YA ANUP- PRINT KAREGA BUT 
+           {=TEXTJOIN("-",TRUE,G1,G2) OUTPUT ME ANUP - SINGH AAYEGA } TRUE IGNORE KAR DEGGA LIKE ANUP YA SINGH DELETE HO JAYE TO ANUP HI YA SINGH HI BAS PRINT KAREGA HIFEN KA USED NHI KAREGA MOSTLY YAHI USED HOTA H 
+
+SPLITING COLUMNS : DELIMITERS  & FIXED WIDTH  
+
+DELIMITERS MEANS : AAPKE PASS DATA H USKO TEXT TO COLUMN EK TOOLS H WAHA JAKAR AAPKO DELIMITERS KA SELECT KARENGE AND THEN AAPKO KIS CHIZ SE USKO ALAG KARNA H LIKE MUJHE ANUP@GMAIL.COM H USKO @ SE ALAGA KARNA H TO OTHER ME JAKAR @ LIKH DENGE THEN AAKO KONSE COLUMN ME USKO DIKHA H USKO SELECT KR KE FINISH KARENGE TO ANUP ALAGA AND GMAIL.COM ALAG HO JAYEGA 
+
+
+FIXED WIDTH : ISKA BHI USED AAP FIXED WIDTH YA USKO ALAG KARNE KE LIYE KR SAKTE H 
+TEXT TO COLUMN H WAHA JAKAR FIXED WIDTH KO SELECT KARENGE AND THEN WAHA JAKAR AAPKO JITNE FIXED LENGTH CHAHIYE USKO AAP UTNE PR KARENGE THEN AAPKO EK VERTICLE LINE DROW HOGI USASE USKO ALAG KR SAKTE H 
+
+
+
+FLASH FILL : AGAR AAPKE PASS EK COLUMN H AUR AAP CHATE HO USME KA DATA AADHA DUSRE ME AUR ADDHA DUSRE ME HO LIKE ANUP SINGH SO FIRST COLUMN ME NAME AND SECOND ME USENAME PRINT HO THEN USED 
+
+FLASH : means  aapka pass name and surname h like anup singh , yuvii singh,ankush kumar,soni devi like this aapko anup ek name me aur surname ek rows me chaiye then used flash sirf first name anup print karoge to uske jaisea hi pura name print kar dega  and dusre me singh print karoge to sabka surname print ho jayega  
+
+
+isko fill TOOLS ME JAEK used kr ke print kr sakte ho 
+
+
+MERGING AND APPENDING :
+
+MERGING : JAB AAP COLUMN KO BADA RAHE H USKO MERGINGN BOLTE H 
+
+APPENDING : JAB AAP ROWS KO INCREASE YA BADHA RAHE H USKO APPENDING BOLTE H 
+
+CONSOLIDATING : MEANS DATA TOOLS ME JAKE WAHA PR AAP APNE CONSOLIDATE NAME KE TOOLS KA USED KR KE JITNE DATA ME SE SUM,AVERAGE,COUNT WHATEVER MATHEMATICAL OPERATIONS PERFORM KARNA CHAHTE H THEN KR SAKTE H 
+
+
+date and time : 
+today,yeasterday,tommorrow , now ,year,month,day ,datedif, networkdays,workday ,
+
+= today() to aapka aaj ka date show kar dega ayese hi = lagakar yesterday chaiye to =today()-1 to yeaster day print ho jayegga and =today()+1 to tomorrow print ho jayega 
+
+=year(kisi date me se month , year, day nikal sakte ho)
+
+datedif =  formula : =datedif(jitney bhi date mese difference chaiye uska then dusra like ,today(),"m","y","d") isase aap month,year,day find kr sakte ho 
+
+
+
+networking days : =networkingday(b2,today()) 
+workdays : =workdays(B2,200)
+
+
+
+gantt chart - style project tracking 
+
+IS MEANS : SHOW DATA INTO GRAPH FORM AND DROW MAXIMUM,MINUMUM LIKE THIS TYPE OF DATA 
+
+GANTT CHART MEANS APNE DATA KO GRAPBH KE FORM ME SHOW KR KE USKO DIKHANA 
+
+LOGICAL FUNCTIONS : IF, IFS, SWITCH,AND , OR  
+
+IF : USED AYESE KARENGE =IF(SALARY > 60000,"HIGH" , "LOW") IT MEANS PAHLE IF DUSRE ELSE STATEMENT KO FOLLOW  KAREGA
+
+
+IFS : SAME LIKE ELIF IN PYTHON OF ELSE IF IN JAVA OR C++ ISME AAP MULTIPLE CONDITION KO EK SATH LIKH SAKTE H LIKE THIS 
+
+=IFS(D2 = 1,"POOR",
+     D2 = 2,"NICE",
+     D2 = 3,"AVERAGE",
+     D2 = 4,"AWESOME",
+     D2 = 5,"EXCELLENT")  ISME AAP MULTIPLE CONDITION KO EK SATH LIKH SAKTE H 
+
+
+SWITCH : SWITCH STATEMENT BHI SAME IFS KI TARAH HOTA H BUT IFS SE BETTER HOTA H IISME CODE REDUNDENCY KAM LIKHNA PADTA H ISME AAP BAHUT KAM LIKHENGE AUR CODE BHI KAM LIKHANA PADTA H 
+ LIKE THIS 
+
+=SWITCH(D2,1,"POOR",
+           2,"NICE",
+           3,"AVERAGE",
+           4,"AWESOME",
+           5,"EXCELLENT")
+
+
+
+YE BETTER H IFS SO SO TRIED KARNA FUTURE ME ISKA JYADA SE JYADA USED KRNE KE LIYE 
+
+AND : IT MEASN DONO CONDION TRUE H THEN PRINT HOGA OTHERWISE NHI HOGA ISKE DONO CONDITION SAHI HONA CHAHIYE 
+
+AND : =AND(B2="HR",C3="MARKETING") YE DONO CONDITION HO TO TRUE PRINT KARO OTHER WISE FALSE PRINT KAR DO 
+
+OR : ISME KOI EK BHI CONDITION SAHI H TO PRINT KR DO TRUE OTHER WISE DONO MESE EK BHI CONDION KO FOLLOW NHI KR RHA H TO FALSE PRINT KR DO 
+
+=OR(B2="HR",C3="MARKETING")  TURE OTHERWISE FALSE 
+
+ISKO IF KE SATH AYESE LIKH SAKTE H 
+
+=IF(AND(B2 = "HR",B2="MARKETING"),"BONUS","NO-BONUS")
+
+=IF(OR(B2 = "HR",B2="MARKETING"),"BONUS","NO-BONUS")
+
+
+ARITHMETIC FUNCTIONS : SUM,AVERAGE, PRODUCT 
+
+SUM ,AVERAGE,PRODUCT,COUNT,MAX,MIN YE SARA BUILT IN FUNCTION H ISKA MTLB YE SARRA FUNCTION PAHLE SE MAUJUD H EXCEL ME TO JUST = LAGAKR IN SAB KA USED KR SAKTE H 
+
+
+LOOKUP FUNCTIONS: 
+                VLOOKUP ,HLOOKUP(LEGACY)
+                INDEX + MATCH (INDUSTRY - PREFERRED) 
+                XLOOKUP (MODERN & POWERFUL)
+                LOOKUP  
+
+
+
+
+🧠 What is a Lookup Function?
+
+👉 It helps you search a value in a table and return a related value.
+
+🔥 1. VLOOKUP (Most Asked)
+
+✅ Syntax
+
+VLOOKUP(lookup_value, table_array, col_index, [range_lookup])
+
+💡 Example
+ID	Name	Salary
+101	Ram	20000
+102	Shyam	30000
+
+=VLOOKUP(101, A2:C3, 2, FALSE)
+
+👉 Output: Ram
+
+⚠️ Limitations
+
+Only searches left → right
+Breaks if column order changes
+
+🚀 2. HLOOKUP
+
+👉 Works horizontally
+
+=HLOOKUP(value, table, row_number, FALSE)
+
+
+⭐ 3. XLOOKUP (BEST 🔥)
+
+👉 Modern replacement of VLOOKUP
+
+✅ Syntax
+
+=XLOOKUP(lookup_value, lookup_array, return_array)
+
+💡 Example
+
+=XLOOKUP(101, A2:A3, B2:B3)
+
+👉 Output: Ram
+
+🔥 Why XLOOKUP is BEST?
+
+✔ Works left & right
+✔ No column index needed
+✔ Handles errors easily
+
+⚡ 4. INDEX + MATCH (INTERVIEW FAVORITE)
+
+✅ Syntax
+
+=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))
+
+ Example
+
+=INDEX(B2:B3, MATCH(101, A2:A3, 0))
+
+👉 Output: Ram
+
+🔥 Why Important?
+
+👉 More flexible than VLOOKUP
+👉 Works in any direction
+
+🆚 Quick Comparison
+Function	Direction	Flexibility	Recommended
+VLOOKUP	Left →   Right         	  Low	         ❌ Old
+HLOOKUP	Top →     Down	          Low	         ❌ Rare
+XLOOKUP	          Any	          High	         ✅ Best
+INDEX+MATCH       Any	          Very High	 ✅ Interview
+
+
+🎯 When to Use What?
+Beginner → VLOOKUP
+Real work → XLOOKUP
+Interview → INDEX + MATCH
+
+
+
+VLOOKUP KI JARURAT KYU PADTI H : MAN LIJIIYE AAPKE PASS BAHUT SARA DATA H AUR AAP US ME SE KISI PARTICULAR CHIZ KO PRINT KARNA CHAHTE HO TO USKE LIYE AAP VLOOKUP KA USED KR SAKTE HO 
+
+VLOOKUP = VERTICLE LOOKUP (SIDHA)  FORMULA : =VLOOKUP("ANUP",A1:C12 [IT MEANS ENTIRE TABLE KO SELECT KARENGE ] ,3(3RD ROWS ),FALSE(EXACT VALUES)
+
+=VLOOKUP("ANUP",A1:C12,3,FALSE)
+
+HLOOKUP = HORIZONATAL LOOKUP (SUTAKE)
+
+FORMULA : =HLOOKUP("SALARY" [COLUMN KA TITLE KO PRINT KARENGE],A1:C12(ENTIRE TABLE KO SELECT KARENGE ) ,3(JITNE ROWS KA CHAHIYE),FALSE(EXACT VALUES KE LIYE ))
+
+=HLOOKUP("SALARY",A1:C12,3,FALSE)
+
+
+
+
+XLOOKUP = DIAGONALLY LOOKUP (TIRCHHA ) 
+
+NOTE : YE COMPANY ME JYADA PUCHHA JATA H AUR YE JYADA IMPORTANT BHI H 
+
+FORMULA : ("YUVII"(KYA CHAIYE LIKE NAME),A1:A12[TABLE KA NAME I MEANS KISME H YE NAME USKA COLUMN KO PURA SELECT KARO],C1:C12[IT MEANS KYA CHAIYE AGAR SALARY CHAIYE TO USKA PURA SELECT KR LO COLUMN ]0
+
+=XLOOKUP("YUVII",A1:A12,C1:C12) 
+
+INDEX - MATCH (YE BHI IMPORTANT H COMPANY ISKE BARE ME BHI BAHUT PUCHHATI H )
+
+FORMULA : INDEX - MATCH (B1:B12 [ISME JO BHI CHIZ CHAIYE US COLUMN KA SELECT KARENGE LIKE AGAR DEPARTMENT TO PURI DEPARTMENT KO SELECT KARENGE ],MATCH("ANUP" [KYA MATCH KARANA CHAHTE H ISKA MATLB ANUP KIS DEPARTMENT ME H ] ,A1:A12 [ISKA MTLB ANUP KIS COLUMN ME EXIST KRTA H ] ))
+
+=INDEX(B1:B12,MATCH("ANUP",A1:A12))  ISKA OUTPUT AAYEGA HR AAP ISKO SALARY SE BHI DEKH SAKTE H 
+
+
+=INDEX(B1:B12,MATCH(300,C1:C12))
+
+
+LOOKUP YE BHI BAHUT JYADA USED HOTA H TO ACCHE SE USED KARO ISKA LIKE THIS 
+
+LOOKUP KA USED KARNE SE PAHLE AAP SALARY YA DATA YA PURA TABLE KO SHORT KR DO TAKI BETTER RESULT DE 
+
+
+FORMULA USED :  =LOOKUP(4500 (MUJHSE SALARY 45OO YA USKE AROUND ME CHAIYE THEN ),C1:C12 [KIS TABLE ME MILEGA ],A1:A12 [USKA NAME PRINT KR DO ]
+
+=LOOKUP(4500,C1:C12,,A1:A12)  OUTPUT BABU 
+
+
+AGAR AAP 4500 KE BICH AROUND DATA KO PRINT KARWANA CHATE H AUR APPKE TABLE ME 4000,4600 HO TO WAH 4000 KO SELECTR KAREGA NAKI 4600 K0 BECAUSE ABOVE APNE SE NHI JATA USKE NICHE  JO KAM DIKHE USKO HI SELECT KAREGA 
+
+
+
+
+IFERROR : IT MEANS YAH YE BATATA H KI AAP KA AGAR AAP LOOKUP FUNCTION USED KR RHE H LIKE 
+
+              XLOOKUP,VLOOKUP,HLOOKIP,INDEX MATCH ETC TO AUR USME KUCHH ERROR AATA H TO
+
+             US ERROR KA APNE NAME YA KUCHH NAME DEKAR SHOW KARANA CHAHTE H THEN USED THIS 
+
+FORMULA : =IFERROR(VLOOKUP)"SALES",B1:B12,3,FALSE),"WRONG FORMULA")  OUTPUT : WRONG FORMULA 
+
+TO AAPKA PATA CHAL JAYEGA EXACT ERROR H KYA 
+
+
+
+
+SORTING,FILTERING & GROUPING 
+DATA SORTING 
+FILTER,ADVANCED FILTER (WITH CRITERIA RANGE) 
+GROUP / UNGROUP ROWS/COLUMNS 
+SUBTOTALS WITH OUTLINE   SUBTOTAL MEANS 
+
+
+AAP APNE DATA KO  GROUP KR KE USKA SUM ,AVERAGE , MAX,MIN YE SARA FIND KR SAKTE HO BINA KISI DATA KO HATAYE SAMJH RAHE HO .JUST PURA DATA KO SELECT KARO DEPARGTMENT AND SUM FIND KARO KON SE DEPARTMENT ME AAP KITNA KHARACH KIYE HO SARA FIND HO JAYEGA .
+
+
+QUERY EDITOR : IT MEANS YE EXCEL HAME PROVIDE KARATA H JISAME WITHOUT ANY DATA AAP JUST ONE CLICK ME JO BHI OPERATION PERFORM KARNA CHAHTE H WAH KR SAKTE H  
+
+
+
+FIRST OF ALL : MERGE MEANS : COLLUMN DATA KO ADD KRNA AND APPEND MEANS ROWS DATA KO ADD KRNA  AND MERGE  KAISE BHI PERFORM KR LETA IT MEANS ISKA DATA JYADA HO YA KAM USASE ISKO FARAK NHI PADTA H BUT APPEND ME FARK PADTA H SABSE BEST TARIKA H AAP APNE DATA KO PAHLI APPEND KARO THEN MERGE KARO YE BEST RAHEGA Y 
